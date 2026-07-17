@@ -151,6 +151,16 @@ export function Hero() {
   useEffect(() => {
     const hero = heroRef.current;
     if (!hero) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      hero.classList.toggle("is-paused", !entry.isIntersecting);
+    }, { rootMargin: "10% 0px", threshold: 0.02 });
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
 
     let frame = 0;
     const onScroll = () => {
@@ -234,7 +244,7 @@ export function Hero() {
             <p className="eyebrow reveal reveal-eyebrow"><span />THE BUSINESS INTELLIGENCE COLLECTIVE<span /></p>
             <h1 className="reveal reveal-headline">Build the business<br />you know is <em>possible.</em></h1>
             <p className="supporting-copy reveal reveal-copy">Gent Ascend Collective designs intelligent systems, digital experiences, and operating infrastructure that help ambitious businesses grow with greater clarity, capability, and control.</p>
-            <div className="framework-brief reveal reveal-copy" aria-live="polite" aria-atomic="true">
+            <div className={`framework-brief reveal reveal-copy${activeNode !== null ? " is-engaged" : ""}`} aria-live="polite" aria-atomic="true">
               <div className="framework-brief-heading">
                 <span>{activeFramework.label}</span>
                 <div className="framework-position" aria-label={activeNode === null ? "No framework selected" : `${activeNode + 1} of 4`}>

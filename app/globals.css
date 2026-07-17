@@ -374,6 +374,7 @@ h1 em { color: var(--gold-light); font-style: italic; font-weight: 500; }
 
 /* Hero visual rebuild — brighter chamber, corrected ring hierarchy, perceptible motion */
 .hero { background: #05080b; }
+.hero.is-paused *, .hero.is-paused *::before, .hero.is-paused *::after { animation-play-state: paused !important; }
 .hero::before { background: radial-gradient(ellipse at 50% 42%, transparent 38%, rgba(0,0,0,.15) 72%, rgba(0,0,0,.58) 108%); }
 .hero::after { box-shadow: inset 0 0 150px 28px rgba(0,0,0,.78); }
 .environment-base { background: radial-gradient(ellipse 46% 52% at 50% 35%, rgba(16,70,108,.48), rgba(8,34,54,.2) 48%, transparent 72%), radial-gradient(ellipse 70% 45% at 50% 100%, rgba(18,43,62,.5), transparent 64%), linear-gradient(115deg, #030608 0%, #10171c 34%, #091725 51%, #0d1217 69%, #030507 100%); }
@@ -451,17 +452,50 @@ h1 em { color: #f5d78f; text-shadow: 0 0 24px rgba(214,162,64,.16); }
   .overhead-light { opacity: .65; }
   .gold-reflection { opacity: .72; animation-duration: 15s; }
   .ambient-light { display: block; opacity: .7; background: radial-gradient(300px circle at 50% 34%, rgba(209,157,62,.09), rgba(26,81,116,.05) 48%, transparent 74%); }
-  .chamber-haze { opacity: .7; filter: blur(26px); }
-  .core-stage { width: min(86vw, 390px); }
+  .chamber-haze { opacity: .66; filter: blur(20px); }
+  .site-header { height: calc(64px + env(safe-area-inset-top)); }
+  .hero-layout { align-content: start; gap: 9px; padding: clamp(10px, 2.2vh, 20px) 0 62px; }
+  .core-stage { width: clamp(190px, 31svh, 284px); }
+  .core-stage::before { inset: -10%; filter: blur(9px); }
+  .core-stage::after { top: -12%; bottom: -12%; filter: blur(12px); }
+  .atmosphere { filter: blur(24px); }
+  .depth-fog { filter: blur(12px); }
   .orbit-two, .segmented-ring { display: block; opacity: .72; }
   .trace-two { display: block; opacity: .55; }
   .particles { opacity: .62; }
   .reveal-core { animation: corePower 1s ease-out .42s forwards, mobileCoreFloat 8s ease-in-out 1.6s infinite alternate; }
-  .framework-node { background: linear-gradient(145deg, rgba(34,40,42,.98), rgba(7,11,13,.98)); }
+  .framework-node { width: 84px; min-height: 44px; background: linear-gradient(145deg, rgba(34,40,42,.98), rgba(7,11,13,.98)); }
+  .node-2 { right: -8%; }.node-4 { left: -8%; }
+  .hero-copy { width: 100%; }
+  .eyebrow { margin-bottom: 8px; font-size: 7px; letter-spacing: .2em; }
+  h1 { font-size: clamp(36px, 10.8vw, 48px); line-height: .96; }
   .supporting-copy { color: #bbb8b1; }
+  .supporting-copy { max-width: 390px; margin-top: 12px; font-size: 11px; line-height: 1.58; }
+  .framework-brief { margin-top: 9px; padding: 8px 6px 7px; }
+  .framework-brief-heading > span { font-size: 6.5px; }
+  .framework-brief p { margin-top: 5px; font-size: 8.5px; line-height: 1.38; }
+  .hero-actions { width: 100%; max-width: 390px; flex-direction: row; gap: 8px; margin-top: 14px; }
+  .button { min-height: 48px; padding: 0 9px; gap: 7px; font-size: 7.5px; letter-spacing: .09em; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .button:active { transform: translateY(2px) scale(.985); }
+  .scroll-cue { bottom: calc(10px + env(safe-area-inset-bottom)); gap: 6px; }
+  .scroll-cue span { display: none; }
+  .scroll-cue i { height: 22px; }
 }
 
 @keyframes mobileCoreFloat { from { translate: 0 -2px; } to { translate: 0 3px; } }
+
+@media (max-width: 430px) and (max-height: 650px) {
+  .hero-layout { padding-top: 6px; padding-bottom: 48px; gap: 5px; }
+  .core-stage { width: clamp(176px, 29svh, 194px); }
+  .framework-brief:not(.is-engaged) { display: none; }
+  h1 { font-size: clamp(34px, 10.4vw, 42px); }
+  .supporting-copy { margin-top: 9px; font-size: 10.5px; line-height: 1.5; }
+  .hero-actions { margin-top: 10px; }
+}
+
+.hero-transition { height: clamp(96px, 14vh, 150px); background: linear-gradient(to bottom, transparent, rgba(5,12,17,.42) 48%, rgba(5,8,10,.9) 86%, #050607); }
+.hero-transition::before { bottom: 16px; background: linear-gradient(90deg, transparent 5%, rgba(92,144,170,.12) 34%, rgba(224,177,88,.28) 50%, rgba(92,144,170,.12) 66%, transparent 95%); }
+.complexity-section { background: radial-gradient(ellipse 52% 24% at 50% 0%, rgba(17,64,94,.2), transparent 72%), radial-gradient(ellipse 55% 62% at 73% 45%, rgba(9,38,59,.25), transparent 72%), linear-gradient(116deg, #050607, #090c0f 54%, #040506); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
