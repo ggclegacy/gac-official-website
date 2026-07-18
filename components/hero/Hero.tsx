@@ -49,6 +49,9 @@ function OpeningEnvironment() {
   return (
     <div className="opening-environment" aria-hidden="true">
       <div className="opening-environment__depth" /><div className="opening-environment__grid" />
+      <div className="opening-environment__architecture"><i /><i /><i /><i /></div>
+      <div className="opening-environment__pathways"><i /><i /><i /></div>
+      <div className="opening-environment__dust"><i /><i /><i /><i /></div>
       <div className="opening-environment__axis" /><div className="opening-environment__light" />
       <div className="opening-environment__floor-light" /><div className="opening-environment__vignette" />
     </div>
@@ -66,7 +69,7 @@ function CommandCore({ activeNode }: { activeNode: number | null }) {
       <div className="opening-command-core__bezel">
         <span className="opening-command-core__reflection" aria-hidden="true" />
         <div className="opening-command-core__chamber">
-          <Image src="/logo.png" alt="Gent Ascend Collective emblem" width={2000} height={2000} sizes="(max-width: 760px) 42vw, 280px" priority />
+          <Image src="/hero-icon.png" alt="Gent Ascend Collective engineered emblem" width={2000} height={2000} sizes="(max-width: 760px) 66vw, 560px" priority />
         </div>
       </div>
     </div>
@@ -153,6 +156,14 @@ export function Hero() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  const enterExperience = () => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const travel = Math.max(scene.offsetHeight - window.innerHeight, 1);
+    window.scrollTo({ top: scene.offsetTop + travel * .31, behavior: reduced ? "auto" : "smooth" });
+  };
+
   return (
     <section className="opening-scene" id="top" ref={sceneRef} aria-labelledby="opening-title">
       <div className="opening-scene__sticky-stage">
@@ -165,14 +176,15 @@ export function Hero() {
           <div className="opening-foreground__message">
             <p className="opening-eyebrow"><span aria-hidden="true" />THE BUSINESS INTELLIGENCE COLLECTIVE</p>
             <h1 id="opening-title">Build the business<br />you know is <em>possible.</em></h1>
-            <a className="opening-primary-action" href="#collective">Begin Your Blueprint <ArrowIcon /></a>
+            <p className="opening-foreground__support">See how possibility becomes a system.</p>
+            <button className="opening-primary-action" type="button" onClick={enterExperience}>Enter the Experience <ArrowIcon /></button>
           </div>
           <div className="opening-framework-brief" aria-live="polite" aria-atomic="true">
             <div><strong>{activeFramework.label}</strong><span aria-label={activeNode === null ? "Framework overview" : `${activeNode + 1} of 4`}>{frameworks.map((item, index) => <i className={activeNode === index ? "is-current" : ""} key={item.label} />)}</span></div>
             <p key={activeFramework.label}>{activeFramework.copy}</p>
           </div>
         </div>
-        <a className="opening-scroll-invitation" href="#collective" aria-label="Continue to the Reality Gap"><span>Scroll to explore</span><i aria-hidden="true" /></a>
+        <a className="opening-scroll-invitation" href="#collective" aria-label="Continue through the experience"><span>Possibility becomes structure</span><i aria-hidden="true" /></a>
         <div className="opening-scene__portal" aria-hidden="true"><i /><span /></div>
         <div className="opening-scene__exit-boundary" aria-hidden="true"><span /></div>
       </div>

@@ -439,6 +439,38 @@ h1 em { color: var(--gold-light); font-style: italic; font-weight: 500; }
   .reality-scene{min-height:auto}.reality-scene__sticky-stage{position:relative;height:auto;min-height:100svh}.reality-scene__layout{min-height:calc(100svh - 36px)}.reality-scene *{animation:none!important}.reality-copy,.reality-network{opacity:1;transform:none}.reality-network__paths path,.reality-network__nodes g,.reality-network__analysis,.reality-network__channels{opacity:1;stroke-dashoffset:0}.reality-network__signals{display:none}.reality-cost{opacity:1;transform:none}.reality-scene__entrance{display:none}.reality-narrative{min-height:86px}
 }
 
+/* Opening Elevation — prompts 1–7 */
+.opening-environment__architecture,.opening-environment__pathways,.opening-environment__dust{position:absolute;inset:0;pointer-events:none}
+.opening-environment__architecture i{position:absolute;top:12%;bottom:4%;width:24%;border:1px solid rgba(105,139,157,.09);background:linear-gradient(140deg,rgba(23,48,62,.16),transparent 48%);clip-path:polygon(0 0,100% 11%,86% 100%,15% 92%)}
+.opening-environment__architecture i:nth-child(1){left:-10%;transform:perspective(700px) rotateY(24deg)}.opening-environment__architecture i:nth-child(2){right:-10%;transform:perspective(700px) rotateY(-24deg)}.opening-environment__architecture i:nth-child(3){left:13%;top:58%;height:30%;width:18%;opacity:.6}.opening-environment__architecture i:nth-child(4){right:13%;top:58%;height:30%;width:18%;opacity:.6}
+.opening-environment__pathways i{position:absolute;left:50%;bottom:7%;width:1px;height:34%;transform-origin:bottom;background:linear-gradient(transparent,rgba(75,132,161,.24),rgba(213,166,76,.24))}.opening-environment__pathways i:nth-child(1){rotate:31deg}.opening-environment__pathways i:nth-child(2){rotate:-31deg}.opening-environment__pathways i:nth-child(3){height:42%;background:linear-gradient(transparent,rgba(68,130,164,.18))}
+.opening-environment__dust i{position:absolute;width:2px;aspect-ratio:1;border-radius:50%;background:#d7b36d;box-shadow:0 0 5px rgba(213,177,106,.5);opacity:.22;animation:elevationDust 12s ease-in-out infinite alternate}.opening-environment__dust i:nth-child(1){left:17%;top:39%;animation-delay:-2s}.opening-environment__dust i:nth-child(2){left:75%;top:31%;animation-delay:-7s}.opening-environment__dust i:nth-child(3){left:29%;top:68%;animation-delay:-4s}.opening-environment__dust i:nth-child(4){left:82%;top:72%;animation-delay:-9s}
+.opening-environment__depth{background:radial-gradient(ellipse 66% 52% at 50% 34%,rgba(12,75,126,.43),rgba(7,39,67,.22) 43%,transparent 73%)}
+.opening-environment__light{background:conic-gradient(from 205deg at 50% 10%,transparent 0 26%,rgba(241,210,147,.095) 30%,transparent 37% 100%)}
+.opening-command-core{width:clamp(252px,69vw,308px)}
+.opening-command-core__bezel{width:84%;padding:3px;background:linear-gradient(145deg,#ecc56f,#6f4b1d 18%,#13181a 45%,#8d6328 72%,#f3d589);box-shadow:0 26px 60px rgba(0,0,0,.86),0 0 48px rgba(17,99,157,.3),0 0 24px rgba(218,167,69,.16),inset 0 1px rgba(255,240,202,.62)}
+.opening-command-core__chamber{background:radial-gradient(circle at 50% 45%,#093b65,#061725 48%,#020507 78%);box-shadow:inset 0 0 0 1px rgba(239,210,154,.22),inset 0 0 38px #000,0 0 24px rgba(16,114,183,.24)}
+.opening-command-core__chamber img{width:98%;height:98%;filter:drop-shadow(0 12px 16px rgba(0,0,0,.58)) saturate(1.04) contrast(1.03)}
+.opening-command-core__outer-ring{inset:0;border-color:rgba(226,187,108,.3);box-shadow:0 0 0 7px rgba(20,65,89,.06),inset 0 0 38px rgba(13,88,137,.17)}
+.opening-command-core__segmented-ring{inset:6%;border-width:1px}
+.opening-command-core__calibration{inset:-7%;opacity:.62}
+.opening-command-core__field{inset:-24%;background:radial-gradient(circle,rgba(19,105,161,.3),rgba(10,55,85,.16) 41%,rgba(196,145,53,.07) 58%,transparent 73%)}
+.opening-foreground__support{margin:15px 0 0;color:#a9b3b6;font-size:11px;line-height:1.5;letter-spacing:.025em}
+.opening-primary-action{border:1px solid rgba(244,211,143,.46);font-family:inherit;cursor:pointer;min-width:218px;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+.opening-primary-action::after{content:"";position:absolute;inset:4px;border:1px solid rgba(75,48,13,.22);clip-path:inherit;pointer-events:none}
+.opening-foreground__message h1{text-shadow:0 10px 28px rgba(0,0,0,.78),0 0 26px rgba(17,68,98,.1)}
+.opening-foreground__system{height:clamp(260px,46svh,365px)}
+.opening-framework__node{border-color:rgba(168,155,124,.36);background:linear-gradient(145deg,rgba(20,29,34,.97),rgba(6,10,13,.98));box-shadow:0 14px 28px rgba(0,0,0,.5),inset 0 1px rgba(100,154,180,.06)}
+.opening-framework__node[aria-pressed="true"]{border-color:rgba(238,198,116,.88);background:linear-gradient(145deg,rgba(33,47,54,.98),rgba(19,16,11,.98));box-shadow:0 14px 30px rgba(0,0,0,.54),0 0 20px rgba(13,105,167,.2),inset 3px 0 #d1a452}
+.opening-command-core.has-active-node .opening-command-core__field{background:radial-gradient(circle,rgba(20,123,190,.4),rgba(12,66,99,.2) 44%,rgba(211,157,58,.09) 59%,transparent 74%)}
+@keyframes elevationDust{to{transform:translate3d(4px,-13px,0);opacity:.52}}
+
+@media(min-width:761px){.opening-command-core{width:clamp(390px,38vw,560px)}.opening-foreground__system{height:min(72vh,700px)}.opening-foreground__support{font-size:13px}.opening-environment__architecture i{width:27%}}
+@media(max-width:430px){.opening-foreground{grid-template-rows:minmax(248px,46svh) auto 1fr}.opening-command-core{width:clamp(235px,67vw,286px)}.opening-primary-action{margin-top:17px}.opening-foreground__message h1{font-size:clamp(37px,10.7vw,47px)}}
+@media(max-width:340px){.opening-command-core{width:220px}.opening-foreground{grid-template-rows:minmax(218px,42svh) auto 1fr}.opening-foreground__support{font-size:10px}.opening-primary-action{min-width:205px}.opening-environment__dust i:nth-child(n+3){display:none}}
+@media(max-height:650px) and (max-width:760px){.opening-foreground{grid-template-rows:minmax(190px,39svh) auto 1fr}.opening-command-core{width:190px}.opening-foreground__support{display:none}}
+@media(prefers-reduced-motion:reduce){.opening-environment__dust i,.opening-command-core__outer-ring,.opening-command-core__segmented-ring,.opening-command-core__field,.opening-command-core__bezel,.opening-command-core__chamber img{animation:none!important}.opening-primary-action::before{display:none}}
+
 /* Opening Experience — Prompt 1 scene architecture */
 .opening-scene {
   --scene-progress: 0;

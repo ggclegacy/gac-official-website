@@ -138,11 +138,22 @@ Scene Two Prompt 7 — rendered production QA. After it passes, proceed to `GAC_
 ## Elevation checklist
 
 - [x] Prompt 0 — protected-engine audit complete
-- [ ] Prompt 1 — living arrival composition
-- [ ] Prompt 2 — living brand environment
-- [ ] Prompt 3 — autonomous life
-- [ ] Prompt 4 — experience-start interaction
+- [x] Prompt 1 — living arrival composition implemented
+- [x] Prompt 2 — living brand environment implemented
+- [x] Prompt 3 — autonomous life implemented
+- [x] Prompt 4 — experience-start interaction implemented
 - [ ] Prompt 5 — framework emergence elevation
 - [ ] Prompt 6 — Enter the System transition elevation
 - [ ] Prompt 7 — premium art direction
 - [ ] Prompt 8 — production QA
+
+## Prompts 1–4 implementation
+
+- Copied the preserved root `hero-icon.png` source to `public/hero-icon.png`; the opening now uses the new 2000×2000 emblem through Next Image with reserved dimensions.
+- Kept the protected scroll ranges, sticky stage, progress variables, portal scaling, and Reality Gap receiver unchanged.
+- Added four-axis architectural planes, ascending pathways, controlled dust, deeper blue environmental light, and shared gold reflection.
+- Expanded the emblem chamber so the new asset—not an empty outer circle—is the dominant focal object.
+- Added independent restrained ring, chamber, reflection, energy, pathway, and atmospheric loops; offscreen and reduced-motion controls remain in place.
+- Replaced `Begin Your Blueprint` with an accessible `Enter the Experience` button. It smoothly advances native scroll to the activation/framework threshold and respects reduced motion.
+- Added the continuation phrase `See how possibility becomes a system.` and replaced the obsolete scroll wording.
+- Rendered browser review unavailable; lint/type/build validation recorded below after implementation.
