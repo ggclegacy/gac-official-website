@@ -142,9 +142,9 @@ Scene Two Prompt 7 — rendered production QA. After it passes, proceed to `GAC_
 - [x] Prompt 2 — living brand environment implemented
 - [x] Prompt 3 — autonomous life implemented
 - [x] Prompt 4 — experience-start interaction implemented
-- [ ] Prompt 5 — framework emergence elevation
-- [ ] Prompt 6 — Enter the System transition elevation
-- [ ] Prompt 7 — premium art direction
+- [x] Prompt 5 — framework emergence elevated
+- [x] Prompt 6 — Enter the System transition elevated
+- [x] Prompt 7 — premium art direction complete
 - [ ] Prompt 8 — production QA
 
 ## Prompts 1–4 implementation
@@ -157,3 +157,12 @@ Scene Two Prompt 7 — rendered production QA. After it passes, proceed to `GAC_
 - Replaced `Begin Your Blueprint` with an accessible `Enter the Experience` button. It smoothly advances native scroll to the activation/framework threshold and respects reduced motion.
 - Added the continuation phrase `See how possibility becomes a system.` and replaced the obsolete scroll wording.
 - Rendered browser review unavailable; lint/type/build validation recorded below after implementation.
+
+## Prompts 5–7 implementation
+
+- Refined the protected progress ranges to give framework assembly and interaction a longer stable inspection window before portal entry.
+- Kept all four disciplines dormant during Arrival, then used the existing progress variables for path drawing, module assembly, copy yielding, and reverse reconstruction.
+- Corrected the neutral state so no discipline pathway appears selected before user activation.
+- Preserved touch, click, keyboard, `aria-pressed`, Escape reset, live explanation, and coordinated core/path lighting behavior.
+- Strengthened the existing portal with a controlled blue focal core while retaining the original scale/mask architecture and Reality Gap receiver.
+- Refined gold, bronze, graphite, obsidian, and blue material separation without adding a rendering dependency or changing Scene Two.

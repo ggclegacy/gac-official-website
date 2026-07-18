@@ -6,9 +6,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 const SCENE_RANGES = {
   arrival: [0, 0.2],
   coreActivation: [0.08, 0.32],
-  frameworkEmergence: [0.28, 0.56],
-  frameworkInteraction: [0.52, 0.78],
-  enterSystem: [0.76, 1],
+  frameworkEmergence: [0.27, 0.55],
+  frameworkInteraction: [0.5, 0.8],
+  enterSystem: [0.78, 1],
 } as const;
 
 const frameworks = [
@@ -81,7 +81,7 @@ function FrameworkSystem({ activeNode, interactive, onActivate }: { activeNode: 
     <div className="opening-framework" aria-label="The Ascend Framework">
       <svg className="opening-framework__paths" viewBox="0 0 100 100" aria-hidden="true">
         <path d="M50 50L22 20M50 50L78 20M50 50L22 80M50 50L78 80" />
-        <path className="opening-framework__active-path" d={activeNode === 0 ? "M50 50L22 20" : activeNode === 1 ? "M50 50L78 20" : activeNode === 2 ? "M50 50L22 80" : "M50 50L78 80"} />
+        <path className={`opening-framework__active-path${activeNode !== null ? " is-active" : ""}`} d={activeNode === 0 ? "M50 50L22 20" : activeNode === 1 ? "M50 50L78 20" : activeNode === 2 ? "M50 50L22 80" : activeNode === 3 ? "M50 50L78 80" : ""} />
       </svg>
       {frameworks.map((framework, index) => (
         <button
@@ -120,8 +120,8 @@ function useOpeningSceneProgress(sceneRef: React.RefObject<HTMLElement | null>, 
         const cssName = name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
         scene.style.setProperty(`--beat-${cssName}`, rangeProgress(progress, SCENE_RANGES[name]).toFixed(4));
       });
-      const interactive = reducedMotion.matches || (progress >= .54 && progress < .79);
-      const exiting = !reducedMotion.matches && progress >= .79;
+      const interactive = reducedMotion.matches || (progress >= .52 && progress < .8);
+      const exiting = !reducedMotion.matches && progress >= .8;
       if (interactive !== lastInteractive || exiting !== lastExiting) {
         lastInteractive = interactive; lastExiting = exiting; onPhaseChange(interactive, exiting);
       }
@@ -185,7 +185,7 @@ export function Hero() {
           </div>
         </div>
         <a className="opening-scroll-invitation" href="#collective" aria-label="Continue through the experience"><span>Possibility becomes structure</span><i aria-hidden="true" /></a>
-        <div className="opening-scene__portal" aria-hidden="true"><i /><span /></div>
+        <div className="opening-scene__portal" aria-hidden="true"><i /><b /><span /></div>
         <div className="opening-scene__exit-boundary" aria-hidden="true"><span /></div>
       </div>
     </section>
