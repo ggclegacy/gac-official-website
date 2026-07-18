@@ -23,6 +23,8 @@ const neutralFramework = {
   copy: "Four connected disciplines designed to strengthen how a business looks, operates, thinks, and grows.",
 };
 
+type CoreState = "neutral" | "identity" | "presence" | "intelligence" | "infrastructure" | "complete" | "transition";
+
 type SceneRangeName = keyof typeof SCENE_RANGES;
 
 function rangeProgress(progress: number, [start, end]: readonly [number, number]) {
@@ -31,6 +33,16 @@ function rangeProgress(progress: number, [start, end]: readonly [number, number]
 
 function ArrowIcon() {
   return <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" /></svg>;
+}
+
+function PillarIcon({ index }: { index: number }) {
+  const paths = [
+    <><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 12h8M12 8v8"/></>,
+    <><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1"/></>,
+    <><path d="M4 17V7l8-4 8 4v10l-8 4-8-4Z"/><path d="m8 14 3-4 2 3 3-4"/></>,
+    <><path d="M4 19V9h5V4h6v5h5v10H4Z"/><path d="M9 9h6M9 14h6"/></>,
+  ];
+  return <svg viewBox="0 0 24 24" aria-hidden="true">{paths[index]}</svg>;
 }
 
 function OpeningNavigation() {
@@ -58,9 +70,9 @@ function OpeningEnvironment() {
   );
 }
 
-function CommandCore({ activeNode }: { activeNode: number | null }) {
+function CommandCore({ activeNode, state }: { activeNode: number | null; state: CoreState }) {
   return (
-    <div className={`opening-command-core${activeNode !== null ? ` has-active-node active-node-${activeNode + 1}` : ""}`} aria-label="Gent Ascend Collective command core">
+    <div className={`opening-command-core core-state-${state}${activeNode !== null ? ` has-active-node active-node-${activeNode + 1}` : ""}`} aria-label="Gent Ascend Collective command core">
       <div className="opening-command-core__field" aria-hidden="true" />
       <div className="opening-command-core__energy" aria-hidden="true"><i /><i /><i /><i /></div>
       <div className="opening-command-core__outer-ring" aria-hidden="true" />
@@ -76,30 +88,29 @@ function CommandCore({ activeNode }: { activeNode: number | null }) {
   );
 }
 
-function FrameworkSystem({ activeNode, interactive, onActivate }: { activeNode: number | null; interactive: boolean; onActivate: (index: number) => void }) {
+function FrameworkSystem({ activeNode, assembled, complete, interactive, onActivate }: { activeNode: number | null; assembled: number; complete: boolean; interactive: boolean; onActivate: (index: number) => void }) {
   return (
-    <div className="opening-framework" aria-label="The Ascend Framework">
+    <div className={`opening-framework framework-assembled-${assembled}${complete ? " is-complete" : ""}`} aria-label="The Ascend Framework">
       <svg className="opening-framework__paths" viewBox="0 0 100 100" aria-hidden="true">
-        <path d="M50 50L22 20M50 50L78 20M50 50L22 80M50 50L78 80" />
+        <path className="pillar-path pillar-path--1" d="M50 50L22 20"/><path className="pillar-path pillar-path--2" d="M50 50L78 20"/><path className="pillar-path pillar-path--3" d="M50 50L22 80"/><path className="pillar-path pillar-path--4" d="M50 50L78 80"/>
         <path className={`opening-framework__active-path${activeNode !== null ? " is-active" : ""}`} d={activeNode === 0 ? "M50 50L22 20" : activeNode === 1 ? "M50 50L78 20" : activeNode === 2 ? "M50 50L22 80" : activeNode === 3 ? "M50 50L78 80" : ""} />
       </svg>
       {frameworks.map((framework, index) => (
         <button
-          className={`opening-framework__node opening-framework__node--${index + 1}`}
+          className={`opening-framework__node opening-framework__node--${index + 1}${index < assembled ? " is-assembled" : ""}${complete ? " is-complete" : ""}`}
           key={framework.label}
           disabled={!interactive}
           aria-pressed={activeNode === index}
           onClick={() => onActivate(index)}
         >
-          <span className="opening-framework__node-mark" aria-hidden="true">0{index + 1}</span>
-          <span>{framework.label}</span>
+          <span className="opening-framework__node-mark" aria-hidden="true">0{index + 1}</span><span className="opening-framework__node-icon"><PillarIcon index={index}/></span><span>{framework.label}</span>
         </button>
       ))}
     </div>
   );
 }
 
-function useOpeningSceneProgress(sceneRef: React.RefObject<HTMLElement | null>, onPhaseChange: (interactive: boolean, exiting: boolean) => void) {
+function useOpeningSceneProgress(sceneRef: React.RefObject<HTMLElement | null>, onPhaseChange: (interactive: boolean, exiting: boolean, assembled: number, automaticNode: number | null, complete: boolean) => void) {
   useEffect(() => {
     const scene = sceneRef.current;
     if (!scene) return;
@@ -107,7 +118,7 @@ function useOpeningSceneProgress(sceneRef: React.RefObject<HTMLElement | null>, 
     let frame = 0;
     let visible = true;
     let lastInteractive = false;
-    let lastExiting = false;
+    let lastExiting = false, lastAssembled = -1, lastAutomatic = -2, lastComplete = false;
 
     const write = () => {
       frame = 0;
@@ -122,8 +133,13 @@ function useOpeningSceneProgress(sceneRef: React.RefObject<HTMLElement | null>, 
       });
       const interactive = reducedMotion.matches || (progress >= .52 && progress < .8);
       const exiting = !reducedMotion.matches && progress >= .8;
-      if (interactive !== lastInteractive || exiting !== lastExiting) {
-        lastInteractive = interactive; lastExiting = exiting; onPhaseChange(interactive, exiting);
+      const assemblyProgress = rangeProgress(progress, [.24, .67]);
+      const assembled = reducedMotion.matches ? 4 : Math.min(4, Math.floor(assemblyProgress * 4.45));
+      const automaticNode = progress >= .29 && progress < .69 ? Math.min(3, Math.floor(rangeProgress(progress, [.29, .69]) * 4)) : null;
+      const complete = !reducedMotion.matches && progress >= .69 && progress < .82;
+      if (interactive !== lastInteractive || exiting !== lastExiting || assembled !== lastAssembled || automaticNode !== lastAutomatic || complete !== lastComplete) {
+        lastInteractive = interactive; lastExiting = exiting; lastAssembled = assembled; lastAutomatic = automaticNode ?? -2; lastComplete = complete;
+        onPhaseChange(interactive, exiting, assembled, automaticNode, complete);
       }
       scene.dataset.motion = reducedMotion.matches ? "reduced" : "full";
     };
@@ -142,11 +158,18 @@ export function Hero() {
   const sceneRef = useRef<HTMLElement>(null);
   const [activeNode, setActiveNode] = useState<number | null>(null);
   const [interactive, setInteractive] = useState(false);
-  const activeFramework = activeNode === null ? neutralFramework : frameworks[activeNode];
+  const [automaticNode, setAutomaticNode] = useState<number | null>(null);
+  const [assembled, setAssembled] = useState(0);
+  const [complete, setComplete] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
+  const [manual, setManual] = useState(false);
+  const displayNode = manual ? activeNode : automaticNode;
+  const activeFramework = complete ? { label: "FRAMEWORK ALIGNED", copy: "Four connected disciplines. One direction for the business." } : displayNode === null ? neutralFramework : frameworks[displayNode];
+  const coreState: CoreState = transitioning ? "transition" : complete ? "complete" : displayNode === null ? "neutral" : frameworks[displayNode].label.toLowerCase() as CoreState;
 
-  const handlePhaseChange = useCallback((canInteract: boolean, exiting: boolean) => {
-    setInteractive(canInteract);
-    if (exiting) setActiveNode(null);
+  const handlePhaseChange = useCallback((canInteract: boolean, exiting: boolean, assemblyCount: number, autoNode: number | null, isComplete: boolean) => {
+    setInteractive(canInteract); setAssembled(assemblyCount); setAutomaticNode(autoNode); setComplete(isComplete); setTransitioning(exiting);
+    if (!canInteract || exiting || isComplete) { setManual(false); setActiveNode(null); }
   }, []);
   useOpeningSceneProgress(sceneRef, handlePhaseChange);
 
@@ -170,17 +193,19 @@ export function Hero() {
         <OpeningEnvironment /><OpeningNavigation />
         <div className="opening-foreground">
           <div className="opening-foreground__system">
-            <FrameworkSystem activeNode={activeNode} interactive={interactive} onActivate={index => setActiveNode(current => current === index ? null : index)} />
-            <CommandCore activeNode={activeNode} />
+            <FrameworkSystem activeNode={displayNode} assembled={assembled} complete={complete} interactive={interactive && !complete} onActivate={index => { setManual(true); setActiveNode(current => manual && current === index ? null : index); }} />
+            <CommandCore activeNode={displayNode} state={coreState} />
           </div>
           <div className="opening-foreground__message">
-            <p className="opening-eyebrow"><span aria-hidden="true" />THE BUSINESS INTELLIGENCE COLLECTIVE</p>
-            <h1 id="opening-title">Build the business<br />you know is <em>possible.</em></h1>
-            <p className="opening-foreground__support">See how possibility becomes a system.</p>
+            <p className="opening-brand-hero">Gent Ascend <span>Collective</span></p>
+            <p className="opening-eyebrow"><span aria-hidden="true" />THE ASCEND FRAMEWORK</p>
+            <h1 id="opening-title">Four pillars.<br />One <em>ascension.</em></h1>
+            <p className="opening-foreground__support">We align how your business is understood, experienced, operated, and equipped to grow.</p>
             <button className="opening-primary-action" type="button" onClick={enterExperience}>Enter the Experience <ArrowIcon /></button>
           </div>
-          <div className="opening-framework-brief" aria-live="polite" aria-atomic="true">
-            <div><strong>{activeFramework.label}</strong><span aria-label={activeNode === null ? "Framework overview" : `${activeNode + 1} of 4`}>{frameworks.map((item, index) => <i className={activeNode === index ? "is-current" : ""} key={item.label} />)}</span></div>
+          <p className="opening-framework-cue">Activate a pillar</p>
+          <div className="opening-framework-brief" aria-live={manual ? "polite" : "off"} aria-atomic="true">
+            <div><strong>{activeFramework.label}</strong><span aria-label={displayNode === null ? "Framework overview" : `${displayNode + 1} of 4`}>{frameworks.map((item, index) => <i className={displayNode === index || complete ? "is-current" : ""} key={item.label} />)}</span></div>
             <p key={activeFramework.label}>{activeFramework.copy}</p>
           </div>
         </div>
