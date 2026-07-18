@@ -1,7 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const SCENE_RANGES = {
+  arrival: [0, 0.2],
+  coreActivation: [0.08, 0.32],
+  frameworkEmergence: [0.28, 0.56],
+  frameworkInteraction: [0.52, 0.78],
+  enterSystem: [0.76, 1],
+} as const;
 
 const frameworks = [
   { label: "Identity", copy: "Clarify what the business stands for, how it should feel, and why people should trust it." },
@@ -10,260 +18,164 @@ const frameworks = [
   { label: "Infrastructure", copy: "Build the workflows, platforms, and operating systems that help the business scale with control." },
 ] as const;
 
-const defaultFramework = {
+const neutralFramework = {
   label: "THE ASCEND FRAMEWORK",
   copy: "Four connected disciplines designed to strengthen how a business looks, operates, thinks, and grows.",
 };
 
-function NodeIcon({ index }: { index: number }) {
-  const paths = [
-    <><path d="M8 2.5 12 4v3.2c0 2.7-1.6 4.8-4 6.3-2.4-1.5-4-3.6-4-6.3V4l4-1.5Z" /><path d="M6.2 7.7 7.5 9l2.5-2.7" /></>,
-    <><circle cx="8" cy="8" r="4.8" /><path d="M3.5 6.3h9M3.5 9.7h9M8 3.2c1.5 1.3 2.2 2.9 2.2 4.8S9.5 11.5 8 12.8C6.5 11.5 5.8 9.9 5.8 8S6.5 4.5 8 3.2Z" /></>,
-    <><path d="M4 5.5h8v6H4zM6 3.5h4M8 3.5v2M6.2 8.4h.1M9.7 8.4h.1M6.3 10h3.4" /></>,
-    <><path d="M3 4h4v3H3zM9 4h4v3H9zM6 9h4v3H6zM5 7v1.1h3M11 7v1.1H8" /></>,
-  ];
+type SceneRangeName = keyof typeof SCENE_RANGES;
 
-  return <svg viewBox="0 0 16 16" aria-hidden="true">{paths[index]}</svg>;
+function rangeProgress(progress: number, [start, end]: readonly [number, number]) {
+  return Math.min(Math.max((progress - start) / (end - start), 0), 1);
 }
 
 function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" />
-    </svg>
-  );
+  return <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" /></svg>;
 }
 
-function Navigation() {
+function OpeningNavigation() {
   return (
-    <header className="site-header reveal reveal-nav">
-      <a className="wordmark" href="#top" aria-label="Gent Ascend Collective home">
-        <span className="wordmark-mark">GA</span>
+    <header className="opening-navigation">
+      <a className="opening-navigation__brand" href="#top" aria-label="Gent Ascend Collective home">
+        <span className="opening-navigation__monogram" aria-hidden="true">GA</span>
         <span>Gent Ascend <em>Collective</em></span>
       </a>
-      <nav aria-label="Primary navigation">
-        <a href="#collective">Collective</a>
-        <a href="#capabilities">Capabilities</a>
-        <a href="#approach">Approach</a>
-        <a href="#blueprint" className="nav-cta">Start a conversation <ArrowIcon /></a>
-      </nav>
+      <a className="opening-navigation__contact" href="#collective">Start a conversation</a>
     </header>
   );
 }
 
-type CommandCoreProps = {
-  activeNode: number | null;
-  onActivate: (index: number) => void;
-  onHoverIntent: (index: number) => void;
-  onHoverEnd: () => void;
-  onNodeBlur: (event: React.FocusEvent<HTMLButtonElement>) => void;
-};
-
-function CommandCore({ activeNode, onActivate, onHoverIntent, onHoverEnd, onNodeBlur }: CommandCoreProps) {
+function OpeningEnvironment() {
   return (
-    <div className={`core-stage reveal reveal-core${activeNode !== null ? ` core-active core-active-${activeNode + 1}` : ""}`} aria-label="Gent Ascend Collective command core">
-      <div className="atmosphere" />
-      <div className="depth-fog" />
-      <div className="particles" aria-hidden="true">
-        {Array.from({ length: 6 }, (_, index) => <i key={index} />)}
-      </div>
-      <div className="orbit orbit-one" />
-      <div className="orbit orbit-two" />
-      <div className="precision-ring"><span /></div>
-      <div className="segmented-ring" />
-      <div className="segment-highlights" aria-hidden="true"><i /><i /><i /><i /></div>
-      <div className="trace trace-one" />
-      <div className="trace trace-two" />
-      <svg className="connections" viewBox="0 0 620 620" aria-hidden="true">
-        <defs>
-          <linearGradient id="channelVertical" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#8f7443" stopOpacity=".08" /><stop offset=".5" stopColor="#e4bf72" stopOpacity=".7" /><stop offset="1" stopColor="#8f7443" stopOpacity=".08" />
-          </linearGradient>
-          <linearGradient id="channelHorizontal" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#8f7443" stopOpacity=".08" /><stop offset=".5" stopColor="#e4bf72" stopOpacity=".7" /><stop offset="1" stopColor="#8f7443" stopOpacity=".08" />
-          </linearGradient>
-        </defs>
-        <path className="channel-base" d="M310 74V206M546 310H414M310 546V414M74 310H206" />
-        <path className="channel-pulse pulse-1" d="M310 74V206" stroke="url(#channelVertical)" />
-        <path className="channel-pulse pulse-2" d="M546 310H414" stroke="url(#channelHorizontal)" />
-        <path className="channel-pulse pulse-3" d="M310 546V414" stroke="url(#channelVertical)" />
-        <path className="channel-pulse pulse-4" d="M74 310H206" stroke="url(#channelHorizontal)" />
-        <circle className="center-signal" cx="310" cy="310" r="109" />
-      </svg>
-      <div className="bezel">
-        <div className="bezel-highlight" />
-        <div className="logo-well">
-          <Image src="/logo.png" alt="Gent Ascend Collective emblem" width={2000} height={2000} priority />
-        </div>
-      </div>
-      {frameworks.map((framework, index) => (
-        <button
-          className={`framework-node node-${index + 1}${activeNode === index ? " is-active" : ""}`}
-          key={framework.label}
-          aria-label={`Activate ${framework.label} framework`}
-          aria-pressed={activeNode === index}
-          onClick={(event) => { if (event.detail > 0 || activeNode !== index) onActivate(index); }}
-          onFocus={(event) => { if (event.currentTarget.matches(":focus-visible") && activeNode !== index) onActivate(index); }}
-          onBlur={onNodeBlur}
-          onPointerEnter={(event) => { if (event.pointerType === "mouse") onHoverIntent(index); }}
-          onPointerLeave={onHoverEnd}
-        >
-          <span className="node-corner node-corner-a" />
-          <span className="node-corner node-corner-b" />
-          <span className="node-icon"><NodeIcon index={index} /></span>
-          <span className="node-label">{framework.label}</span>
-        </button>
-      ))}
-      <svg className="core-lines" viewBox="0 0 620 620" aria-hidden="true">
-        <circle cx="310" cy="310" r="252" />
-        <path d="M310 26v33M594 310h-33M310 594v-33M26 310h33" />
-        <path className="gold-line" d="M102 164A252 252 0 0 1 226 72M518 456a252 252 0 0 1-124 92" />
-      </svg>
+    <div className="opening-environment" aria-hidden="true">
+      <div className="opening-environment__depth" /><div className="opening-environment__grid" />
+      <div className="opening-environment__axis" /><div className="opening-environment__light" />
+      <div className="opening-environment__floor-light" /><div className="opening-environment__vignette" />
     </div>
   );
 }
 
-export function Hero() {
-  const heroRef = useRef<HTMLElement>(null);
-  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [activeNode, setActiveNode] = useState<number | null>(null);
-  const activeFramework = activeNode === null ? defaultFramework : frameworks[activeNode];
+function CommandCore({ activeNode }: { activeNode: number | null }) {
+  return (
+    <div className={`opening-command-core${activeNode !== null ? ` has-active-node active-node-${activeNode + 1}` : ""}`} aria-label="Gent Ascend Collective command core">
+      <div className="opening-command-core__field" aria-hidden="true" />
+      <div className="opening-command-core__energy" aria-hidden="true"><i /><i /><i /><i /></div>
+      <div className="opening-command-core__outer-ring" aria-hidden="true" />
+      <div className="opening-command-core__segmented-ring" aria-hidden="true" />
+      <div className="opening-command-core__calibration" aria-hidden="true" />
+      <div className="opening-command-core__bezel">
+        <span className="opening-command-core__reflection" aria-hidden="true" />
+        <div className="opening-command-core__chamber">
+          <Image src="/logo.png" alt="Gent Ascend Collective emblem" width={2000} height={2000} sizes="(max-width: 760px) 42vw, 280px" priority />
+        </div>
+      </div>
+    </div>
+  );
+}
 
-  const activateNode = (index: number) => {
-    setActiveNode((current) => current === index ? null : index);
-  };
+function FrameworkSystem({ activeNode, interactive, onActivate }: { activeNode: number | null; interactive: boolean; onActivate: (index: number) => void }) {
+  return (
+    <div className="opening-framework" aria-label="The Ascend Framework">
+      <svg className="opening-framework__paths" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M50 50L22 20M50 50L78 20M50 50L22 80M50 50L78 80" />
+        <path className="opening-framework__active-path" d={activeNode === 0 ? "M50 50L22 20" : activeNode === 1 ? "M50 50L78 20" : activeNode === 2 ? "M50 50L22 80" : "M50 50L78 80"} />
+      </svg>
+      {frameworks.map((framework, index) => (
+        <button
+          className={`opening-framework__node opening-framework__node--${index + 1}`}
+          key={framework.label}
+          disabled={!interactive}
+          aria-pressed={activeNode === index}
+          onClick={() => onActivate(index)}
+        >
+          <span className="opening-framework__node-mark" aria-hidden="true">0{index + 1}</span>
+          <span>{framework.label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
 
-  const handleHoverIntent = (index: number) => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    hoverTimer.current = setTimeout(() => setActiveNode(index), 110);
-  };
-
-  const handleHoverEnd = () => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-  };
-
-  const handleNodeBlur = (event: React.FocusEvent<HTMLButtonElement>) => {
-    if (!(event.relatedTarget instanceof Element) || !event.relatedTarget.closest(".framework-node")) {
-      setActiveNode(null);
-    }
-  };
-
+function useOpeningSceneProgress(sceneRef: React.RefObject<HTMLElement | null>, onPhaseChange: (interactive: boolean, exiting: boolean) => void) {
   useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      hero.classList.toggle("is-paused", !entry.isIntersecting);
-    }, { rootMargin: "10% 0px", threshold: 0.02 });
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero) return;
-
+    const scene = sceneRef.current;
+    if (!scene) return;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => {
-        const distance = Math.min(window.scrollY, window.innerHeight);
-        hero.style.setProperty("--hero-back", `${Math.min(distance * 0.012, 9)}px`);
-        hero.style.setProperty("--hero-mid", `${Math.min(distance * 0.024, 17)}px`);
-        hero.style.setProperty("--hero-front", `${Math.min(distance * 0.038, 26)}px`);
-        frame = 0;
+    let visible = true;
+    let lastInteractive = false;
+    let lastExiting = false;
+
+    const write = () => {
+      frame = 0;
+      if (!visible && !reducedMotion.matches) return;
+      const bounds = scene.getBoundingClientRect();
+      const distance = Math.max(bounds.height - window.innerHeight, 1);
+      const progress = reducedMotion.matches ? 0 : Math.min(Math.max(-bounds.top / distance, 0), 1);
+      scene.style.setProperty("--scene-progress", progress.toFixed(4));
+      (Object.keys(SCENE_RANGES) as SceneRangeName[]).forEach((name) => {
+        const cssName = name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
+        scene.style.setProperty(`--beat-${cssName}`, rangeProgress(progress, SCENE_RANGES[name]).toFixed(4));
       });
+      const interactive = reducedMotion.matches || (progress >= .54 && progress < .79);
+      const exiting = !reducedMotion.matches && progress >= .79;
+      if (interactive !== lastInteractive || exiting !== lastExiting) {
+        lastInteractive = interactive; lastExiting = exiting; onPhaseChange(interactive, exiting);
+      }
+      scene.dataset.motion = reducedMotion.matches ? "reduced" : "full";
     };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(write); };
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; scene.dataset.sceneActive = String(visible); if (visible) schedule(); }, { rootMargin: "20% 0px" });
+    observer.observe(scene);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    reducedMotion.addEventListener("change", schedule);
+    schedule();
+    return () => { observer.disconnect(); window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); reducedMotion.removeEventListener("change", schedule); if (frame) cancelAnimationFrame(frame); };
+  }, [sceneRef, onPhaseChange]);
+}
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      return () => window.removeEventListener("scroll", onScroll);
-    }
+export function Hero() {
+  const sceneRef = useRef<HTMLElement>(null);
+  const [activeNode, setActiveNode] = useState<number | null>(null);
+  const [interactive, setInteractive] = useState(false);
+  const activeFramework = activeNode === null ? neutralFramework : frameworks[activeNode];
 
-    let pointerFrame = 0;
-    let pointerX = window.innerWidth / 2;
-    let pointerY = window.innerHeight / 2;
-    const updateCamera = () => {
-      const x = pointerX / window.innerWidth - 0.5;
-      const y = pointerY / window.innerHeight - 0.5;
-      hero.style.setProperty("--pointer-x", `${x}`);
-      hero.style.setProperty("--pointer-y", `${y}`);
-      hero.style.setProperty("--light-x", `${pointerX}px`);
-      hero.style.setProperty("--light-y", `${pointerY}px`);
-      hero.style.setProperty("--camera-bg-x", `${x * 2}px`);
-      hero.style.setProperty("--camera-bg-y", `${y * 1.5}px`);
-      hero.style.setProperty("--camera-mid-x", `${x * 5}px`);
-      hero.style.setProperty("--camera-mid-y", `${y * 4}px`);
-      hero.style.setProperty("--camera-front-x", `${x * 9}px`);
-      hero.style.setProperty("--camera-front-y", `${y * 7}px`);
-      pointerFrame = 0;
-    };
-    const onPointerMove = (event: PointerEvent) => {
-      pointerX = event.clientX;
-      pointerY = event.clientY;
-      if (!pointerFrame) pointerFrame = window.requestAnimationFrame(updateCamera);
-    };
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("scroll", onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-      if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
-    };
+  const handlePhaseChange = useCallback((canInteract: boolean, exiting: boolean) => {
+    setInteractive(canInteract);
+    if (exiting) setActiveNode(null);
   }, []);
+  useOpeningSceneProgress(sceneRef, handlePhaseChange);
 
   useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveNode(null);
-    };
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") setActiveNode(null); };
     window.addEventListener("keydown", onKeyDown);
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    };
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
   return (
-    <main>
-      <section className="hero" id="top" ref={heroRef}>
-        <div className="environment" aria-hidden="true">
-          <div className="environment-base" />
-          <div className="structural-grid" />
-          <div className="architectural-lines"><i /><i /><i /><i /></div>
-          <div className="chamber-haze" />
-          <div className="overhead-light" />
-          <div className="gold-reflection" />
-          <div className="foreground-fragment fragment-left" />
-          <div className="foreground-fragment fragment-right" />
-        </div>
-        <div className="ambient-light" aria-hidden="true" />
-        <div className="grain" />
-        <Navigation />
-        <div className="hero-layout">
-          <CommandCore activeNode={activeNode} onActivate={activateNode} onHoverIntent={handleHoverIntent} onHoverEnd={handleHoverEnd} onNodeBlur={handleNodeBlur} />
-          <div className="hero-copy">
-            <p className="eyebrow reveal reveal-eyebrow"><span />THE BUSINESS INTELLIGENCE COLLECTIVE<span /></p>
-            <h1 className="reveal reveal-headline">Build the business<br />you know is <em>possible.</em></h1>
-            <p className="supporting-copy reveal reveal-copy">Gent Ascend Collective designs intelligent systems, digital experiences, and operating infrastructure that help ambitious businesses grow with greater clarity, capability, and control.</p>
-            <div className={`framework-brief reveal reveal-copy${activeNode !== null ? " is-engaged" : ""}`} aria-live="polite" aria-atomic="true">
-              <div className="framework-brief-heading">
-                <span>{activeFramework.label}</span>
-                <div className="framework-position" aria-label={activeNode === null ? "No framework selected" : `${activeNode + 1} of 4`}>
-                  {frameworks.map((framework, index) => <i className={activeNode === index ? "is-current" : ""} key={framework.label} />)}
-                </div>
-              </div>
-              <p key={activeFramework.label}>{activeFramework.copy}</p>
-            </div>
-            <div className="hero-actions reveal reveal-actions">
-              <a className="button button-primary" href="#blueprint">Begin Your Blueprint <ArrowIcon /></a>
-              <a className="button button-secondary" href="#collective">Explore the Collective <ArrowIcon /></a>
-            </div>
+    <section className="opening-scene" id="top" ref={sceneRef} aria-labelledby="opening-title">
+      <div className="opening-scene__sticky-stage">
+        <OpeningEnvironment /><OpeningNavigation />
+        <div className="opening-foreground">
+          <div className="opening-foreground__system">
+            <FrameworkSystem activeNode={activeNode} interactive={interactive} onActivate={index => setActiveNode(current => current === index ? null : index)} />
+            <CommandCore activeNode={activeNode} />
+          </div>
+          <div className="opening-foreground__message">
+            <p className="opening-eyebrow"><span aria-hidden="true" />THE BUSINESS INTELLIGENCE COLLECTIVE</p>
+            <h1 id="opening-title">Build the business<br />you know is <em>possible.</em></h1>
+            <a className="opening-primary-action" href="#collective">Begin Your Blueprint <ArrowIcon /></a>
+          </div>
+          <div className="opening-framework-brief" aria-live="polite" aria-atomic="true">
+            <div><strong>{activeFramework.label}</strong><span aria-label={activeNode === null ? "Framework overview" : `${activeNode + 1} of 4`}>{frameworks.map((item, index) => <i className={activeNode === index ? "is-current" : ""} key={item.label} />)}</span></div>
+            <p key={activeFramework.label}>{activeFramework.copy}</p>
           </div>
         </div>
-        <a className="scroll-cue reveal reveal-scroll" href="#collective" aria-label="Scroll to explore">
-          <span>Scroll to explore</span><i />
-        </a>
-        <div className="hero-transition" aria-hidden="true"><span /></div>
-      </section>
-    </main>
+        <a className="opening-scroll-invitation" href="#collective" aria-label="Continue to the Reality Gap"><span>Scroll to explore</span><i aria-hidden="true" /></a>
+        <div className="opening-scene__portal" aria-hidden="true"><i /><span /></div>
+        <div className="opening-scene__exit-boundary" aria-hidden="true"><span /></div>
+      </div>
+    </section>
   );
 }
