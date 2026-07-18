@@ -69,7 +69,7 @@ function CommandCore({ activeNode }: { activeNode: number | null }) {
       <div className="opening-command-core__bezel">
         <span className="opening-command-core__reflection" aria-hidden="true" />
         <div className="opening-command-core__chamber">
-          <Image src="/hero-icon.png" alt="Gent Ascend Collective engineered emblem" width={2000} height={2000} sizes="(max-width: 760px) 66vw, 560px" priority />
+          <Image src="/hero-icon.png" alt="Gent Ascend Collective engineered emblem" width={1200} height={1200} sizes="(max-width: 760px) 66vw, 560px" priority />
         </div>
       </div>
     </div>

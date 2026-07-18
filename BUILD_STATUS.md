@@ -145,7 +145,7 @@ Scene Two Prompt 7 — rendered production QA. After it passes, proceed to `GAC_
 - [x] Prompt 5 — framework emergence elevated
 - [x] Prompt 6 — Enter the System transition elevated
 - [x] Prompt 7 — premium art direction complete
-- [ ] Prompt 8 — production QA
+- [ ] Prompt 8 — automated QA complete; rendered-browser verification unavailable
 
 ## Prompts 1–4 implementation
 
@@ -166,3 +166,52 @@ Scene Two Prompt 7 — rendered production QA. After it passes, proceed to `GAC_
 - Preserved touch, click, keyboard, `aria-pressed`, Escape reset, live explanation, and coordinated core/path lighting behavior.
 - Strengthened the existing portal with a controlled blue focal core while retaining the original scale/mask architecture and Reality Gap receiver.
 - Refined gold, bronze, graphite, obsidian, and blue material separation without adding a rendering dependency or changing Scene Two.
+
+## Prompt 8 final verification
+
+### Prompts completed
+
+- Prompts 0–7 are implemented and locally checkpointed.
+- Prompt 8 automated, structural, asset, accessibility-source, and production-build checks are complete.
+- Prompt 8 is not marked fully complete because the required rendered browser was unavailable.
+
+### Files changed
+
+- `components/hero/Hero.tsx`
+- `app/globals.css`
+- `public/hero-icon.png`
+- `BUILD_STATUS.md`
+
+### Protected scroll behavior confirmed
+
+- The original `SCENE_RANGES`, normalized native-scroll calculations, passive scroll scheduling, sticky stage, CSS progress variables, command-core scale portal, and Reality Gap receiver remain the active engine.
+- No animation, smooth-scroll, canvas, WebGL, or 3D dependency was introduced.
+
+### Mobile review results by viewport
+
+- 390px, 375px, 430px, 320px, tablet, desktop, and ultrawide have dedicated responsive rules and overflow containment.
+- Direct rendered observation could not be performed because the configured browser runtime exposed no browser.
+- Dynamic browser chrome, perceived pacing, actual clipping, and forward/fast/reverse visual continuity remain to be manually reviewed.
+
+### Accessibility result
+
+- One semantic `h1`, accessible emblem alternative, native button activation, visible focus styling, 48px minimum start control, semantic framework buttons, `aria-pressed`, live explanation updates, and Escape reset remain present.
+- Reduced motion removes continuous travel, shortens the sticky track, preserves content and framework controls, and makes the start action advance without smooth animation.
+
+### Performance result
+
+- Continuous movement uses transforms, opacity, and CSS/SVG animation; scroll work remains one animation-frame-batched controller without per-frame React state.
+- Opening animations pause while the scene is offscreen.
+- The public emblem was resized from the preserved 2000px/6.9MB source to a transparent 1200px/2.3MB delivery source; Next Image supplies responsive optimized output.
+
+### Validation commands and outcomes
+
+- `npm run lint` — passed
+- `npx tsc --noEmit` — passed
+- `npm run build` — passed
+- `GET /` — HTTP 200
+- `GET /hero-icon.png` — HTTP 200
+
+### Remaining non-blocking visual observations
+
+- Manually inspect the required viewport order, ten-second idle state, touch selection, keyboard navigation, mid-portal reversal, dynamic browser bars, and Reality Gap landing before declaring production approval.
