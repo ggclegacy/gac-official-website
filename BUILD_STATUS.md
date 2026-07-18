@@ -113,3 +113,36 @@ None. The configured browser runtime exposed no controllable browser. Source rev
 ## Exact next prompt number
 
 Scene Two Prompt 7 — rendered production QA. After it passes, proceed to `GAC_SCENE_THREE_ASCEND_FRAMEWORK_BUILD_SEQUENCE.md`.
+
+---
+
+# Opening Experience Elevation
+
+## Protected Cinematic Engine
+
+- `components/hero/Hero.tsx`: `SCENE_RANGES`, `rangeProgress`, and `useOpeningSceneProgress` normalize native page scroll into arrival, activation, framework, interaction, and portal progress variables.
+- `app/globals.css`: `.opening-scene` supplies narrative distance; `.opening-scene__sticky-stage` pins the `100dvh` composition; `.opening-foreground__system` uses `--beat-enter-system` for the existing command-core camera scale; `.opening-scene__portal` masks the handoff.
+- `components/OperationalComplexity.tsx`: `useRealityProgress` receives normal document scroll after the opening and resolves the same gold/blue geometry into the Reality Gap.
+- Mobile behavior depends on `svh`/`dvh`, safe-area padding, `overflow: clip`, and breakpoint-specific composition—not global scene scaling.
+- Reduced motion shortens the scroll tracks, removes continuous travel, preserves the full static system, and replaces the deep zoom with direct continuity.
+
+## Prompt 0 baseline
+
+- Homepage: `app/page.tsx`; opening: `components/hero/Hero.tsx`; Reality Gap: `components/OperationalComplexity.tsx`; shared styling: `app/globals.css`.
+- Existing engine uses native passive scroll events batched through one `requestAnimationFrame`; no motion dependency is installed.
+- New source asset confirmed at repository root: `hero-icon.png` (transparent, circular gold/blue emblem).
+- Current hero still uses `/logo.png`; arrival asset replacement is required.
+- Browser runtime exposed no controllable browser, so rendered 390px/desktop baseline inspection could not be performed here.
+- Production design unchanged during Prompt 0.
+
+## Elevation checklist
+
+- [x] Prompt 0 — protected-engine audit complete
+- [ ] Prompt 1 — living arrival composition
+- [ ] Prompt 2 — living brand environment
+- [ ] Prompt 3 — autonomous life
+- [ ] Prompt 4 — experience-start interaction
+- [ ] Prompt 5 — framework emergence elevation
+- [ ] Prompt 6 — Enter the System transition elevation
+- [ ] Prompt 7 — premium art direction
+- [ ] Prompt 8 — production QA
