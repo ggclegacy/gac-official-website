@@ -287,3 +287,38 @@ Scene Two implementation is feature complete and production-build clean. Visual 
 - The untouched approved Business Core image now carries the scene through breathing, increased activity, asymmetric load, strain, focused recognition, and confident stability.
 - V3 files: `components/OperationalComplexity.tsx`, `public/bc-icon.png`, `app/globals.css`, `BUILD_STATUS.md`.
 - Remaining limitation: real rendered QA at 390/375/430/320, tablet, desktop, ultrawide, Safari/Chrome dynamic bars, long swipe, reverse scroll, and reduced motion requires an external browser because this runtime exposes zero backends.
+
+---
+
+# Scene Two Permanent Creative Direction — Implementation Record
+
+## Architectural decision
+
+- Scene One’s brand emblem remains the landing focal point and retains the user-approved 40% reduced scale.
+- As the existing sticky timeline enters the Framework Activation Chamber, the brand emblem resolves into the immutable `bc-icon.png` Business Core within the same housing. This is the minimum transition interface needed to preserve Scene One while giving Scene Two its correct focal object.
+- `hero-icon.png` and `bc-icon.png` remain separate assets with separate narrative roles. The Business Core source and public copy remain byte-identical.
+
+## Prompt completion
+
+- [x] Prompt 1 — Existing chamber engine, ranges, modules, copy, core, handoff, exit, responsive rules, accessibility, and performance ownership audited and protected.
+- [x] Prompt 2 — Stable mobile-first chamber zones and authoritative final-cascade hierarchy remain complete.
+- [x] Prompt 3 — `bc-icon.png` now becomes the living typed-state Business Core after the Scene One handoff; brand artwork remains unchanged.
+- [x] Prompt 4 — Engineered semantic 01–04 modules, custom symbols, connection paths, and non-color active/completed states remain complete.
+- [x] Prompt 5 — Shared executive HTML explanation system remains stable, prominent, and manual-announcement aware.
+- [x] Prompt 6 — Arrival now explicitly bridges the brand command core into the Business Core/chamber without a hard section reset.
+- [x] Prompt 7 — Identity defines the core and chamber through precision, axis, clarity, positioning, and trust.
+- [x] Prompt 8 — Presence extends the shared field outward and explains customer encounter, visibility, experience, and reputation.
+- [x] Prompt 9 — Intelligence routes analytical blue response through the Business Core and explains insight, decisions, and capability.
+- [x] Prompt 10 — Infrastructure reinforces shared housing and pathways and explains systems, scale, and control.
+- [x] Prompt 11 — Completion synchronizes modules, pathways, environment, and Business Core around `Four Pillars. One Ascension.`
+- [x] Prompt 12 — One chamber-wide lighting/environment system remains state-responsive, dimensional, restrained, and mobile-aware.
+- [x] Prompt 13 — Native timeline authority, manual selection rules, hysteresis, readable holds, and reverse reconstruction remain complete.
+- [x] Prompt 14 — Completion recedes modules and resolves Business Core into light before the existing next-scene handoff.
+- [x] Prompt 15 — Dedicated 390/375/430/320, short-height, tablet, desktop, and ultrawide-capable rules remain authoritative.
+- [x] Prompt 16 — One frame-batched listener, CSS-variable interpolation, offscreen pause, bounded filters, and responsive asset sizing remain complete.
+- [x] Prompt 17 — Semantic buttons, real HTML copy, focus/pressed states, manual-only announcements, and a stable reduced-motion Business Core composition remain complete.
+
+## Review boundary
+
+- Automated/source review confirms the intended emotional sequence, asset roles, state synchronization, mobile rules, accessibility structure, and performance architecture.
+- Rendered art-direction, touch, viewport, text-zoom, and motion certification remains external: browser discovery returned zero backends, and the persistent runtime troubleshooting reference pointed to a retired plugin version.

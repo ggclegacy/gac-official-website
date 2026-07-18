@@ -83,7 +83,8 @@ function CommandCore({ activeNode, state }: { activeNode: number | null; state: 
       <div className="opening-command-core__bezel">
         <span className="opening-command-core__reflection" aria-hidden="true" />
         <div className="opening-command-core__chamber">
-          <Image src="/hero-icon.png" alt="Gent Ascend Collective engineered emblem" width={1200} height={1200} sizes="(max-width: 760px) 66vw, 560px" priority />
+          <Image className="opening-command-core__brand" src="/hero-icon.png" alt="" width={1200} height={1200} sizes="(max-width: 760px) 58vw, 500px" priority />
+          <Image className="opening-command-core__business" src="/bc-icon.png" alt="" width={2000} height={2000} sizes="(max-width: 760px) 58vw, 500px" />
         </div>
       </div>
     </div>
