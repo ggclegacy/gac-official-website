@@ -2,17 +2,17 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const PHASES = ["transition", "connected", "growth", "complexity", "hiddenCost", "analysis", "alignment"] as const;
-const CUTS = [0, .08, .25, .42, .59, .75, .89, 1] as const;
+const PHASES = ["arrival", "growth", "complexity", "hiddenCost", "recognition", "alignment"] as const;
+const CUTS = [0, .17, .34, .51, .68, .84, 1] as const;
 const stateCopy = [
-  ["Arrival", "A capable business comes into focus around one living operating core."],
-  ["Connected", "What once worked was direct, connected, and easy to manage."],
-  ["Growth", "Growth adds more customers, people, tools, and decisions."],
-  ["Complexity", "The business has grown beyond the systems that once supported it."],
-  ["Hidden Cost", "Complexity quietly consumes time, focus, visibility, consistency, and opportunity."],
-  ["Analysis", "When the pattern becomes visible, the path forward becomes clearer."],
+  ["Arrival", "At first, the business is direct, connected, and easy to manage."],
+  ["Growth", "More opportunity brings more customers, people, tools, and decisions."],
+  ["Complexity", "The business begins outgrowing the systems that once supported it."],
+  ["Hidden Cost", "Complexity quietly consumes time, attention, visibility, consistency, and opportunity."],
+  ["Recognition", "When the pattern becomes visible, the business can finally respond to what growth requires."],
   ["Alignment", "The moving parts begin finding one shared direction."],
 ] as const;
+type RealityPhase = typeof PHASES[number];
 
 const nodes = [
   ["customers", "Customers", 52, 105, "base"], ["team", "Team", 126, 55, "base"],
@@ -44,7 +44,7 @@ function useSceneProgress(ref: React.RefObject<HTMLElement | null>, onPhase: (ph
       scene.style.setProperty("--reality-progress", progress.toFixed(4));
       PHASES.forEach((phase, index) => scene.style.setProperty(`--phase-${phase.replace(/[A-Z]/g, x => `-${x.toLowerCase()}`)}`, clamp((progress - CUTS[index]) / (CUTS[index + 1] - CUTS[index])).toFixed(4)));
       const raw = CUTS.findIndex((cut, index) => index < CUTS.length - 1 && progress >= cut && progress < CUTS[index + 1]);
-      let next = motion.matches ? 6 : Math.max(0, raw);
+      let next = motion.matches ? 5 : Math.max(0, raw);
       if (last >= 0 && next !== last) {
         const boundary = next > last ? CUTS[next] : CUTS[last];
         if (Math.abs(progress - boundary) < .008) next = last;
@@ -60,28 +60,27 @@ function useSceneProgress(ref: React.RefObject<HTMLElement | null>, onPhase: (ph
   }, [ref, onPhase]);
 }
 
-function BusinessCore() {
-  return <g className="business-core" transform="translate(195 210)" aria-hidden="true">
-    <circle className="business-core__halo" r="43"/><circle className="business-core__ring" r="34"/>
-    <path className="business-core__braces" d="M-23-23h13M10-23h13M23 23H10M-10 23h-13M-23-23v13M23-23v13M23 10v13M-23 10v13"/>
-    <path className="business-core__axis" d="M0 20V-20M-7-12 0-20l7 8"/><circle className="business-core__nucleus" r="8"/>
-    <g className="business-core__ports"><circle cx="0" cy="-34" r="3"/><circle cx="34" cy="0" r="3"/><circle cx="0" cy="34" r="3"/><circle cx="-34" cy="0" r="3"/></g>
-    <text y="57" textAnchor="middle">BUSINESS CORE</text>
+function BusinessCore({ phase }: { phase: RealityPhase }) {
+  return <g className={`business-core business-core--${phase}`} transform="translate(195 210)" aria-hidden="true">
+    <circle className="business-core__halo" r="54"/><circle className="business-core__ring" r="47"/>
+    <image className="business-core__image" href="/bc-icon.png" x="-43" y="-43" width="86" height="86" preserveAspectRatio="xMidYMid meet"/>
+    <g className="business-core__ports"><circle cx="0" cy="-47" r="3"/><circle cx="47" cy="0" r="3"/><circle cy="47" r="3"/><circle cx="-47" r="3"/></g>
+    <text y="68" textAnchor="middle">BUSINESS CORE</text>
   </g>;
 }
 
-function Network({ selected, onSelect }: { selected: string | null; onSelect: (id: string) => void }) {
+function Network({ phase, selected, onSelect }: { phase: RealityPhase; selected: string | null; onSelect: (id: string) => void }) {
   return <div className="reality-network">
     <svg viewBox="0 0 390 430" role="img" aria-label="A growing business network moving from healthy connection through complexity toward alignment.">
       <defs><linearGradient id="realityPath" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#7398ad" stopOpacity=".24"/><stop offset=".5" stopColor="#d5aa58" stopOpacity=".78"/><stop offset="1" stopColor="#607f91" stopOpacity=".14"/></linearGradient><filter id="coreGlow" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
       <g className="network-paths">{paths.map((d, i) => <path d={d} className={i < 4 ? "base" : i < 13 ? "growth" : "complex"} key={d}/>)}</g>
       <g className="network-signals">{paths.slice(0, 13).map((d, i) => <circle r="2.2" className={i > 3 ? "growth" : "base"} key={d}><animateMotion dur={`${4.5 + i % 3}s`} repeatCount="indefinite" path={d}/></circle>)}</g>
-      <BusinessCore/>
+      <BusinessCore phase={phase}/>
       <g className="analysis-field"><circle cx="195" cy="210" r="83"/><path d="M195 18V402M18 210H372"/></g>
       <g className="alignment-channels"><path d="M195 210V12M195 210H378M195 210V418M195 210H12"/></g>
     </svg>
     <div className="network-nodes">{nodes.map(([id,label,x,y,kind]) => <button key={id} type="button" className={`${kind} ${selected === id ? "selected" : ""}`} style={{left:`${x / 3.9}%`,top:`${y / 4.3}%`}} aria-pressed={selected === id} aria-label={`${label} operational node`} onClick={() => onSelect(id)}><i aria-hidden="true"/><span>{label}</span></button>)}</div>
-    <div className="hidden-costs" aria-hidden="true">{["Time","Focus","Consistency","Visibility","Opportunity"].map(word => <span key={word}>{word}</span>)}</div>
+    <div className="hidden-costs" aria-hidden="true">{["Attention","Time","Visibility","Consistency","Opportunity"].map(word => <span key={word}>{word}</span>)}</div>
   </div>;
 }
 
@@ -90,8 +89,8 @@ export function OperationalComplexity() {
   const changePhase = useCallback((value: number) => { setPhase(value); if (value > 3) setSelected(null); }, []); useSceneProgress(ref, changePhase);
   return <section className={`reality-scene phase-${PHASES[phase]}`} id="collective" ref={ref} aria-labelledby="reality-title">
     <div className="reality-scene__sticky-stage"><div className="reality-environment" aria-hidden="true"><i/><i/><i/><i/></div><div className="reality-atmosphere" aria-hidden="true"/><div className="continuity-axis" aria-hidden="true"/>
-      <div className="reality-layout"><div className="reality-copy"><p className="reality-copy__eyebrow">THE REALITY OF GROWTH</p><h2 id="reality-title">Success creates <em>complexity.</em></h2><p>As a business grows, more people, tools, and decisions enter the picture. When those moving parts are not connected, growth begins consuming the attention it should be creating.</p><div className="reality-state" key={phase}><strong>{stateCopy[phase][0]}</strong><span>{stateCopy[phase][1]}</span></div><div className="phase-meter" aria-hidden="true">{PHASES.map((name,i)=><i className={i <= phase ? "reached" : ""} key={name}/>)}</div></div>
-      <Network selected={selected} onSelect={id => setSelected(current => current === id ? null : id)}/></div>
+      <div className="reality-layout"><div className="reality-copy"><p className="reality-copy__eyebrow">THE REALITY OF GROWTH</p><h2 id="reality-title">Success creates <em>complexity.</em></h2><p>As a business grows, more customers, people, tools, and decisions enter the picture. Growth is not the problem. The challenge begins when those moving parts stop working as one system.</p><div className="reality-state" key={phase}><strong>{stateCopy[phase][0]}</strong><span>{stateCopy[phase][1]}</span></div><div className="phase-meter" aria-hidden="true">{PHASES.map((name,i)=><i className={i <= phase ? "reached" : ""} key={name}/>)}</div></div>
+      <Network phase={PHASES[phase]} selected={selected} onSelect={id => setSelected(current => current === id ? null : id)}/></div>
       <div className="reality-exit" aria-hidden="true"><i/><i/><i/><i/><span/></div>
     </div>
     <div className="sr-only"><h3>Scene summary</h3>{stateCopy.slice(1).map((item)=><p key={item[0]}><strong>{item[0]}:</strong> {item[1]}</p>)}</div>

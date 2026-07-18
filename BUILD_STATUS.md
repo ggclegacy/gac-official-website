@@ -173,3 +173,117 @@ Scene Two implementation is feature complete and production-build clean. Visual 
 - Files changed for this chamber pass: `components/hero/Hero.tsx`, `app/globals.css`, `BUILD_STATUS.md`.
 - Final validation: `npm run lint` passed; `npx tsc --noEmit` passed; `npm run build` passed; `/` statically prerendered.
 - Remaining limitation: required rendered review at 390, 375, 430, 320, tablet, desktop, ultrawide, mobile Safari/Chrome, touch, keyboard, slow/fast/reverse scroll, and reduced motion could not run because the browser runtime exposed zero backends. Final visual production approval remains contingent on that external observation pass.
+
+---
+
+# Transformation — From Complexity to Clarity — Prompts 1–16
+
+## Baseline and protected handoff
+
+- Reality Gap source and exit: `components/OperationalComplexity.tsx`; new transformation stage: `components/TransformationScene.tsx`; page order: `app/page.tsx`; visual choreography: `app/globals.css`.
+- The Reality Gap’s central gold/blue axis, client Business Core, primary/supporting nodes, and early-alignment channels were selected as continuity elements. Hero, Framework Chamber, Reality Gap engine, and proof-scene boundary are protected.
+- Baseline `npm run lint`, `npx tsc --noEmit`, and `npm run build` passed before implementation.
+- Browser limitation: browser discovery returned zero backends, so no rendered mobile/desktop observation is claimed.
+
+## Sequential completion record
+
+- [x] Prompt 1 — Audited Reality Gap progress, Business Core, nodes, routes, alignment exit, responsive/reduced-motion rules, and selected the shared central axis for handoff.
+- [x] Prompt 2 — Added a mobile-first 700svh native-scroll stage with nine normalized ranges, stable semantic thresholds, sticky `100dvh` composition, and no scroll trapping.
+- [x] Prompt 3 — Established focused blue intelligence, precise gold direction, reinforced graphite architecture, shortened route hierarchy, synchronized signals, and controlled depth.
+- [x] Prompt 4 — Recognition preserves the same analyzed business, holds friction, reduces noise, traces priority relationships, and shifts the core into readiness.
+- [x] Prompt 5 — Identity introduces the central decision axis, sharper primary hierarchy, and a stable core signature without reducing the discipline to logo design.
+- [x] Prompt 6 — Presence aligns Website, Marketing, Leads, and customer touchpoints with bidirectional outward/inward flow.
+- [x] Prompt 7 — Intelligence connects information sources through deep-blue feedback routes and focused decision return without generic AI imagery.
+- [x] Prompt 8 — Infrastructure reinforces operational routes, resolves duplication, establishes a shared backbone, and steadies execution timing.
+- [x] Prompt 9 — Integration embeds all four influences in the client network, synchronizes routes, and reveals one coordinated operating system without pillar controls.
+- [x] Prompt 10 — Command stabilizes the living core, clarifies primary routes, opens environmental depth, and introduces a restrained upward trajectory.
+- [x] Prompt 11 — Added the approved eyebrow/headline and one stable HTML transformation statement per beat; complete reduced-motion narrative remains visible.
+- [x] Prompt 12 — Added continuous CSS interpolation, 0.8% semantic hysteresis, deterministic quick/reverse states, and synchronized copy/network/environment/core behavior.
+- [x] Prompt 13 — Added a proof-ready exit field carrying one aligned gold axis and restrained line without building the proof scene.
+- [x] Prompt 14 — Added intentional 390/375/430/320, short-height, tablet, desktop, and ultrawide-capable topology, label simplification, safe areas, and overflow containment.
+- [x] Prompt 15 — Centralized requestAnimationFrame work, compact SVG filtering, Intersection Observer/page-hidden pausing, semantic HTML, hidden decorative visualization, and a complete static reduced-motion story.
+- [x] Prompt 16 — Cleanup and full source/automated QA complete; no service grid, dashboard, before/after slider, proof scene, heavy dependency, hover-gated meaning, or unrelated refactor was introduced.
+
+## Final result
+
+- The same client business now progresses through Recognition, Identity, Presence, Intelligence, Infrastructure, Integration, Command, and a proof-ready exit.
+- The scene demonstrates operational effects rather than repeating the Framework Activation Chamber.
+- Files created/changed: `components/TransformationScene.tsx`, `app/page.tsx`, `app/globals.css`, `BUILD_STATUS.md`.
+- Accessibility/performance: semantic narrative, non-color state distinctions, static reduced-motion story, one cancellable frame-batched listener, offscreen pause, lightweight SVG/CSS rendering.
+- Remaining limitation: required rendered review at 390, 375, 430, 320, tablet, desktop, ultrawide, mobile Safari/Chrome, slow/fast/reverse scroll, and reduced motion requires an external browser because this runtime exposes zero backends.
+
+---
+
+# Framework Activation Chamber V2 — Prompts 1–17
+
+## Audit and preservation
+
+- Chamber logic/copy/core state: `components/hero/Hero.tsx`; authoritative V2 materials/responsive/pacing: final cascade in `app/globals.css`.
+- Protected: brand-first landing emblem, native passive scroll controller, sticky stage, Scene Two receiver, Reality Gap, Transformation scene, reduced motion, and manual semantic controls.
+- Baseline lint, typecheck, and production build passed. Audit found later legacy stylesheet layers could override earlier chamber improvements, contributing to weak hierarchy, insufficient real logo scale, and the “controls plus paragraph” impression.
+- Browser discovery returned zero backends; rendered observations are not claimed.
+
+## Sequential completion
+
+- [x] Prompt 1 — Mapped scene engine, core, controls, copy, entry/exit, responsive and reduced-motion behavior; recorded cascade/hierarchy/pacing risks.
+- [x] Prompt 2 — Established core → beat → title → explanation → supporting modules → cue hierarchy with stable mobile regions and no engine replacement.
+- [x] Prompt 3 — Preserved engineered 01–04 semantic modules and custom symbol family; made active/completed/supporting states materially distinct without generic tabs.
+- [x] Prompt 4 — Expanded the shared HTML briefing into label, large title, explanation, concepts, and progress with stable height and restrained content resolution.
+- [x] Prompt 5 — Identity now sharpens chamber definition and explains direction, decisions, messages, experience, positioning, and trust.
+- [x] Prompt 6 — Presence expands the unified environment outward and explains recognition across website, message, reputation, and customer experience.
+- [x] Prompt 7 — Intelligence accelerates deep-blue routed energy and explains insight, decisions, and business capability without generic AI decoration.
+- [x] Prompt 8 — Infrastructure reinforces the core housing and shared architecture while explaining systems, repeatable scale, consistency, visibility, and control.
+- [x] Prompt 9 — Completion makes the chamber—not four selected buttons—the subject and reveals `Four Pillars. One Ascension.` with the full ascent payoff.
+- [x] Prompt 10 — Added unified state-responsive executive lighting at the authoritative cascade boundary.
+- [x] Prompt 11 — Made the actual emblem fill 90% of a near-full-width arrival core, then yield space as the framework assembles; typed core states remain authoritative.
+- [x] Prompt 12 — Rewrote every beat around business consequences and added concise supporting concepts in semantic HTML.
+- [x] Prompt 13 — Expanded the track to 720svh mobile/660svh desktop; Introduction, four pillars, Completion, and Exit each receive dedicated ranges with native scrolling and deterministic reversal.
+- [x] Prompt 14 — Added final-cascade 390/375/430/320, short-height, tablet, desktop, and ultrawide-capable composition rules.
+- [x] Prompt 15 — Retained one frame-batched progress source, CSS variables, offscreen pause, transform/opacity choreography, responsive image delivery, and no new dependency.
+- [x] Prompt 16 — Native buttons, pressed state, focus, touch targets, manual-only polite announcements, real HTML copy, hidden decoration, and stable reduced-motion selection remain complete.
+- [x] Prompt 17 — Production cleanup and automated QA complete; unrelated scenes and cinematic engine remain intact.
+
+## Final result
+
+- Six executive beats: Framework Introduction, Identity, Presence, Intelligence, Infrastructure, and Framework Completion.
+- The brand emblem dominates arrival; active pillars become scene-level subjects; the panel explains why each matters; completion resolves into one connected transformation system.
+- V2 files changed: `components/hero/Hero.tsx`, `app/globals.css`, `BUILD_STATUS.md`.
+- Remaining limitation: real rendered QA at required viewports, touch/swipe/reverse behavior, dynamic browser bars, and reduced motion requires an external browser because this runtime exposes zero backends.
+
+---
+
+# Cinematic Business Core & Reality of Growth V3 — Prompts 1–17
+
+## Audit and protected asset
+
+- Scene engine/network/copy/core: `components/OperationalComplexity.tsx`; authoritative V3 state lighting/responsive behavior: final cascade in `app/globals.css`.
+- Approved `bc-icon.png`: 2000×2000, RGBA PNG. Source and `public/bc-icon.png` SHA-256 both `861568fc34ebff32db2555d57d7e7cdbd605236d8e87613083ecfc6d6806bf81`; asset pixels are unchanged.
+- Protected: native sticky scroll engine, network topology, Reality/Transformation handoff, all unrelated scenes, semantic node controls, reduced motion, and source asset.
+- Baseline project validation was clean. Browser discovery returned zero backends; rendered observations are not claimed.
+
+## Sequential completion
+
+- [x] Prompt 1 — Audited scene files, seven-state prototype, thresholds, network, copy, lighting, responsive/reduced-motion rules, and verified the approved Business Core asset.
+- [x] Prompt 2 — Replaced the code-drawn placeholder with untouched `bc-icon.png` inside typed state housing, four ports, blue depth, gold precision, and six distinct living responses.
+- [x] Prompt 3 — Preserved primary/supporting/tertiary hierarchy and expanded route language through direct, growth, duplicate, interrupted, recognized, and aligned states.
+- [x] Prompt 4 — Added authoritative six-state executive lighting, graphite architecture response, dimensional haze, and richer blue/obsidian/gold balance.
+- [x] Prompt 5 — Arrival now holds a healthy four-function network, short direct routes, calm signals, and a quiet breathing Business Core.
+- [x] Prompt 6 — Growth progressively reveals supporting systems, increases coordinated signals, broadens opportunity light, and accelerates core acknowledgment.
+- [x] Prompt 7 — Complexity lengthens/duplicates routes, pauses selected signals, divides focus, and creates asymmetric but capable core load.
+- [x] Prompt 8 — Hidden Cost stages Attention, Time, Visibility, Consistency, and Opportunity while routes wait, fade, diverge, and pressure the core.
+- [x] Prompt 9 — Recognition focuses diagnostic geometry, prioritizes direct routes, suppresses noise, and gives the Business Core an interpretive response.
+- [x] Prompt 10 — Alignment reduces duplicate routes, restores signal timing, opens the environment, stabilizes the asset/core housing, and preserves a forward channel.
+- [x] Prompt 11 — Implemented the concise V3 headline/support and six business-owner-focused dynamic statements in stable semantic HTML.
+- [x] Prompt 12 — Unified state lighting around the Business Core; no independent node-glow system or harsh flash was introduced.
+- [x] Prompt 13 — Replaced seven compressed stages with six longer ranges and 0.8% hysteresis; mobile track is 720svh and desktop 660svh.
+- [x] Prompt 14 — Added final 390/375/430/320, short-height, tablet, desktop, and ultrawide-capable signal/density rules without uniform shrink.
+- [x] Prompt 15 — Kept one cancellable frame-batched scroll source, compact filter region, mobile signal limits, offscreen/page-hidden pausing, and no new dependency.
+- [x] Prompt 16 — Decorative SVG remains summarized; HTML carries all six states; node controls retain labels/focus/touch targets; reduced motion exposes the full visible six-state story.
+- [x] Prompt 17 — Cleanup and automated production QA complete; cinematic engine and unrelated scenes remain intact.
+
+## Final result
+
+- Emotional progression: Healthy → Growing → Busy → Overwhelmed → Understood → Aligned.
+- The untouched approved Business Core image now carries the scene through breathing, increased activity, asymmetric load, strain, focused recognition, and confident stability.
+- V3 files: `components/OperationalComplexity.tsx`, `public/bc-icon.png`, `app/globals.css`, `BUILD_STATUS.md`.
+- Remaining limitation: real rendered QA at 390/375/430/320, tablet, desktop, ultrawide, Safari/Chrome dynamic bars, long swipe, reverse scroll, and reduced motion requires an external browser because this runtime exposes zero backends.

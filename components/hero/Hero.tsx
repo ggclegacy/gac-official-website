@@ -4,23 +4,25 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const SCENE_RANGES = {
-  arrival: [0, 0.2],
-  coreActivation: [0.08, 0.32],
-  frameworkEmergence: [0.27, 0.55],
-  frameworkInteraction: [0.5, 0.8],
-  enterSystem: [0.78, 1],
+  arrival: [0, 0.16],
+  coreActivation: [0.05, 0.22],
+  frameworkEmergence: [0.14, 0.3],
+  frameworkInteraction: [0.22, 0.84],
+  enterSystem: [0.84, 1],
 } as const;
 
 const frameworks = [
-  { label: "Identity", copy: "Clarify what the business stands for, how it should feel, and why people should trust it." },
-  { label: "Presence", copy: "Create the digital experience, messaging, and visibility that make the business impossible to overlook." },
-  { label: "Intelligence", copy: "Equip the company with AI, insight, and decision systems that improve how it thinks and serves." },
-  { label: "Infrastructure", copy: "Build the workflows, platforms, and operating systems that help the business scale with control." },
+  { label: "Identity", title: "Identity creates direction.", copy: "When a business is clear about what it stands for, every decision, message, and experience begins moving in the same direction.", concepts: "Clarity · Positioning · Trust" },
+  { label: "Presence", title: "Presence turns clarity into recognition.", copy: "Your website, message, reputation, and customer experience should make the value of your business impossible to miss.", concepts: "Visibility · Experience · Reputation" },
+  { label: "Intelligence", title: "Intelligence turns information into action.", copy: "AI, insight, and decision systems help the business see what matters, respond faster, and serve with greater capability.", concepts: "Insight · Decisions · Capability" },
+  { label: "Infrastructure", title: "Infrastructure turns capability into control.", copy: "Connected workflows, platforms, and operating systems allow the business to grow without losing consistency, visibility, or control.", concepts: "Systems · Scale · Control" },
 ] as const;
 
 const neutralFramework = {
   label: "THE ASCEND FRAMEWORK",
-  copy: "Four connected disciplines designed to strengthen how a business looks, operates, thinks, and grows.",
+  title: "Four disciplines. One connected transformation system.",
+  copy: "Each strengthens a different part of the business. Together, they create one direction for growth.",
+  concepts: "Identity · Presence · Intelligence · Infrastructure",
 };
 
 type CoreState = "neutral" | "identity" | "presence" | "intelligence" | "infrastructure" | "complete" | "transition";
@@ -131,12 +133,12 @@ function useOpeningSceneProgress(sceneRef: React.RefObject<HTMLElement | null>, 
         const cssName = name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
         scene.style.setProperty(`--beat-${cssName}`, rangeProgress(progress, SCENE_RANGES[name]).toFixed(4));
       });
-      const interactive = reducedMotion.matches || (progress >= .52 && progress < .8);
-      const exiting = !reducedMotion.matches && progress >= .8;
-      const assemblyProgress = rangeProgress(progress, [.24, .67]);
+      const interactive = reducedMotion.matches || (progress >= .25 && progress < .84);
+      const exiting = !reducedMotion.matches && progress >= .84;
+      const assemblyProgress = rangeProgress(progress, [.18, .73]);
       const assembled = reducedMotion.matches ? 4 : Math.min(4, Math.floor(assemblyProgress * 4.45));
-      const automaticNode = progress >= .29 && progress < .69 ? Math.min(3, Math.floor(rangeProgress(progress, [.29, .69]) * 4)) : null;
-      const complete = !reducedMotion.matches && progress >= .69 && progress < .82;
+      const automaticNode = progress >= .2 && progress < .75 ? Math.min(3, Math.floor(rangeProgress(progress, [.2, .75]) * 4)) : null;
+      const complete = !reducedMotion.matches && progress >= .75 && progress < .86;
       if (interactive !== lastInteractive || exiting !== lastExiting || assembled !== lastAssembled || automaticNode !== lastAutomatic || complete !== lastComplete) {
         lastInteractive = interactive; lastExiting = exiting; lastAssembled = assembled; lastAutomatic = automaticNode ?? -2; lastComplete = complete;
         onPhaseChange(interactive, exiting, assembled, automaticNode, complete);
@@ -164,7 +166,7 @@ export function Hero() {
   const [transitioning, setTransitioning] = useState(false);
   const [manual, setManual] = useState(false);
   const displayNode = manual ? activeNode : automaticNode;
-  const activeFramework = complete ? { label: "FRAMEWORK ALIGNED", copy: "Four connected disciplines. One direction for the business." } : displayNode === null ? neutralFramework : frameworks[displayNode];
+  const activeFramework = complete ? { label: "FRAMEWORK COMPLETE", title: "Four Pillars. One Ascension.", copy: "When identity, presence, intelligence, and infrastructure strengthen one another, businesses don’t just grow. They ascend.", concepts: "One connected transformation system" } : displayNode === null ? neutralFramework : frameworks[displayNode];
   const coreState: CoreState = transitioning ? "transition" : complete ? "complete" : displayNode === null ? "neutral" : frameworks[displayNode].label.toLowerCase() as CoreState;
 
   const handlePhaseChange = useCallback((canInteract: boolean, exiting: boolean, assemblyCount: number, autoNode: number | null, isComplete: boolean) => {
@@ -199,14 +201,14 @@ export function Hero() {
           <div className="opening-foreground__message">
             <p className="opening-brand-hero">Gent Ascend <span>Collective</span></p>
             <p className="opening-eyebrow"><span aria-hidden="true" />THE ASCEND FRAMEWORK</p>
-            <h1 id="opening-title">Four pillars.<br />One <em>ascension.</em></h1>
-            <p className="opening-foreground__support">We align how your business is understood, experienced, operated, and equipped to grow.</p>
+            <h1 id="opening-title">Four disciplines.<br />One connected <em>transformation system.</em></h1>
+            <p className="opening-foreground__support">Each strengthens a different part of the business. Together, they create one direction for growth.</p>
             <button className="opening-primary-action" type="button" onClick={enterExperience}>Enter the Experience <ArrowIcon /></button>
           </div>
           <p className="opening-framework-cue">Activate a pillar</p>
           <div className="opening-framework-brief" aria-live={manual ? "polite" : "off"} aria-atomic="true">
             <div><strong>{activeFramework.label}</strong><span aria-label={displayNode === null ? "Framework overview" : `${displayNode + 1} of 4`}>{frameworks.map((item, index) => <i className={displayNode === index || complete ? "is-current" : ""} key={item.label} />)}</span></div>
-            <p key={activeFramework.label}>{activeFramework.copy}</p>
+            <h2 key={`${activeFramework.label}-title`}>{activeFramework.title}</h2><p key={activeFramework.label}>{activeFramework.copy}</p><small>{activeFramework.concepts}</small>
           </div>
         </div>
         <a className="opening-scroll-invitation" href="#collective" aria-label="Continue through the experience"><span>Possibility becomes structure</span><i aria-hidden="true" /></a>
