@@ -11,6 +11,11 @@ const SCENE_RANGES = {
   enterSystem: [0.84, 1],
 } as const;
 
+const TRANSITION_RANGES = {
+  completion: [.74, .82], overload: [.8, .87], collapse: [.85, .925],
+  singularity: [.915, .955], release: [.945, .985], reformation: [.975, 1],
+} as const;
+
 const frameworks = [
   { label: "Identity", title: "Identity creates direction.", copy: "When a business is clear about what it stands for, every decision, message, and experience begins moving in the same direction.", concepts: "Clarity · Positioning · Trust" },
   { label: "Presence", title: "Presence turns clarity into recognition.", copy: "Your website, message, reputation, and customer experience should make the value of your business impossible to miss.", concepts: "Visibility · Experience · Reputation" },
@@ -134,6 +139,9 @@ function useOpeningSceneProgress(sceneRef: React.RefObject<HTMLElement | null>, 
         const cssName = name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
         scene.style.setProperty(`--beat-${cssName}`, rangeProgress(progress, SCENE_RANGES[name]).toFixed(4));
       });
+      Object.entries(TRANSITION_RANGES).forEach(([name, transitionRange]) => {
+        scene.style.setProperty(`--transition-${name}`, rangeProgress(progress, transitionRange).toFixed(4));
+      });
       const interactive = reducedMotion.matches || (progress >= .25 && progress < .84);
       const exiting = !reducedMotion.matches && progress >= .84;
       const assemblyProgress = rangeProgress(progress, [.18, .73]);
@@ -213,7 +221,11 @@ export function Hero() {
           </div>
         </div>
         <a className="opening-scroll-invitation" href="#collective" aria-label="Continue through the experience"><span>Possibility becomes structure</span><i aria-hidden="true" /></a>
-        <div className="opening-scene__portal" aria-hidden="true"><i /><b /><span /></div>
+        <div className="opening-scene__portal" aria-hidden="true">
+          <div className="transition-singularity"><i/><b/></div>
+          <svg className="transition-release" viewBox="0 0 100 100"><path d="M50 50V3"/><path d="M50 50H97"/><path d="M50 50V97"/><path d="M50 50H3"/><circle cx="50" cy="50" r="23"/><circle cx="50" cy="50" r="36"/></svg>
+          <span />
+        </div>
         <div className="opening-scene__exit-boundary" aria-hidden="true"><span /></div>
       </div>
     </section>

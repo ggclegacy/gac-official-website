@@ -1,98 +1,164 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const PHASES = ["arrival", "growth", "complexity", "hiddenCost", "recognition", "alignment"] as const;
-const CUTS = [0, .17, .34, .51, .68, .84, 1] as const;
-const stateCopy = [
-  ["Arrival", "At first, the business is direct, connected, and easy to manage."],
-  ["Growth", "More opportunity brings more customers, people, tools, and decisions."],
-  ["Complexity", "The business begins outgrowing the systems that once supported it."],
-  ["Hidden Cost", "Complexity quietly consumes time, attention, visibility, consistency, and opportunity."],
-  ["Recognition", "When the pattern becomes visible, the business can finally respond to what growth requires."],
-  ["Alignment", "The moving parts begin finding one shared direction."],
-] as const;
-type RealityPhase = typeof PHASES[number];
+const STATES = ["arrival", "healthy", "growth", "complexity", "recognition", "alignment"] as const;
+type LivingBusinessState = (typeof STATES)[number];
 
-const nodes = [
-  ["customers", "Customers", 52, 105, "base"], ["team", "Team", 126, 55, "base"],
-  ["operations", "Operations", 272, 62, "base"], ["growth", "Growth", 340, 124, "base"],
-  ["website", "Website", 40, 270, "growth"], ["leads", "Leads", 108, 354, "growth"],
-  ["scheduling", "Scheduling", 205, 382, "growth"], ["marketing", "Marketing", 302, 354, "growth secondary"],
-  ["finance", "Finance", 350, 276, "growth friction"], ["data", "Customer Data", 363, 203, "growth friction"],
-  ["inventory", "Inventory", 21, 205, "growth tertiary"], ["crm", "CRM", 73, 397, "growth tertiary"],
-  ["vendors", "Vendors", 332, 400, "growth tertiary"],
-] as const;
-const paths = [
-  "M195 210C145 190 95 143 52 105", "M195 210C174 145 150 89 126 55", "M195 210C216 142 244 91 272 62", "M195 210C252 190 304 157 340 124",
-  "M52 105C42 166 37 218 40 270", "M40 270C58 317 81 343 108 354", "M195 210C178 282 181 341 205 382", "M205 382C246 383 276 371 302 354",
-  "M340 124C357 176 358 229 350 276", "M340 124C358 152 365 177 363 203", "M40 270C26 249 20 226 21 205", "M108 354C94 373 82 388 73 397", "M302 354C316 373 326 390 332 400",
-  "M108 354C177 320 267 321 350 276", "M40 270C126 241 249 258 350 276", "M363 203C314 229 254 229 195 210"
+const RANGES = {
+  transition: [0, 0.1], arrival: [0.06, 0.22], healthy: [0.18, 0.38],
+  growth: [0.34, 0.58], complexity: [0.54, 0.76], recognition: [0.72, 0.9],
+  alignment: [0.86, 0.98], exit: [0.95, 1],
+} as const;
+
+const STATE_STARTS = [0.06, 0.2, 0.37, 0.57, 0.75, 0.89] as const;
+const COPY = {
+  arrival: ["THE REALITY OF GROWTH", "Success creates complexity.", "Every growing business adds more people, tools, responsibilities, and decisions. Growth is not the problem. The challenge begins when those moving parts stop working as one system."],
+  healthy: ["A HEALTHY BUSINESS", "Connected by design.", "At first, the business is direct, connected, and easy to manage."],
+  growth: ["GROWTH & EXPANSION", "Capability expands.", "Growth adds capability—more customers, more people, more tools, and more opportunity."],
+  complexity: ["COMPLEXITY EMERGING", "Coordination becomes the work.", "Capable people begin spending their attention holding disconnected systems together."],
+  recognition: ["THE PATTERN BECOMES VISIBLE", "See the system clearly.", "Once the pattern becomes visible, the business can begin operating differently."],
+  alignment: ["EARLY ALIGNMENT", "A clearer way forward.", "When the business can see itself clearly, complexity becomes something it can redesign."],
+} satisfies Record<LivingBusinessState, readonly [string, string, string]>;
+
+type NodeLayer = "primary" | "market" | "delivery" | "control";
+type BusinessNode = { id: string; label: string; x: number; y: number; layer: NodeLayer };
+
+const NODES: readonly BusinessNode[] = [
+  { id: "customers", label: "Customers", x: 54, y: 98, layer: "primary" },
+  { id: "team", label: "Team", x: 128, y: 50, layer: "primary" },
+  { id: "operations", label: "Operations", x: 270, y: 56, layer: "primary" },
+  { id: "growth", label: "Growth", x: 340, y: 112, layer: "primary" },
+  { id: "website", label: "Website", x: 31, y: 250, layer: "market" },
+  { id: "leads", label: "Leads", x: 86, y: 331, layer: "market" },
+  { id: "marketing", label: "Marketing", x: 30, y: 382, layer: "market" },
+  { id: "customer-data", label: "Customer Data", x: 353, y: 204, layer: "market" },
+  { id: "scheduling", label: "Scheduling", x: 148, y: 391, layer: "delivery" },
+  { id: "service", label: "Service Delivery", x: 235, y: 400, layer: "delivery" },
+  { id: "inventory", label: "Inventory", x: 307, y: 370, layer: "delivery" },
+  { id: "vendors", label: "Vendors", x: 364, y: 317, layer: "delivery" },
+  { id: "finance", label: "Finance", x: 363, y: 266, layer: "control" },
+  { id: "crm", label: "CRM", x: 92, y: 402, layer: "control" },
+  { id: "reporting", label: "Reporting", x: 285, y: 421, layer: "control" },
+];
+
+const ROUTES = [
+  ["primary", "M195 210C145 185 96 137 54 98"], ["primary", "M195 210C174 142 151 82 128 50"],
+  ["primary", "M195 210C217 140 244 88 270 56"], ["primary", "M195 210C252 187 303 147 340 112"],
+  ["market", "M54 98C35 148 27 207 31 250"], ["market", "M31 250C42 290 61 317 86 331"],
+  ["market", "M86 331C65 350 47 368 30 382"], ["market", "M340 112C356 143 360 174 353 204"],
+  ["delivery", "M195 210C165 278 145 342 148 391"], ["delivery", "M195 210C218 286 234 350 235 400"],
+  ["delivery", "M235 400C264 402 288 391 307 370"], ["delivery", "M307 370C333 359 350 341 364 317"],
+  ["control", "M340 112C368 164 370 218 363 266"], ["control", "M86 331C87 360 89 385 92 402"],
+  ["control", "M235 400C254 413 270 420 285 421"],
+  ["strain duplicate", "M31 250C126 237 272 263 363 266"],
+  ["strain crossing", "M54 98C136 174 254 304 364 317"],
+  ["strain isolated", "M30 382C121 356 245 355 353 204"],
+  ["backbone", "M195 420V210V18"],
 ] as const;
 
-function clamp(value: number) { return Math.min(Math.max(value, 0), 1); }
+const clamp = (value: number) => Math.min(Math.max(value, 0), 1);
 
-function useSceneProgress(ref: React.RefObject<HTMLElement | null>, onPhase: (phase: number) => void) {
+function useLivingBusinessProgress(ref: React.RefObject<HTMLElement | null>, onState: (state: LivingBusinessState) => void) {
   useEffect(() => {
-    const scene = ref.current; if (!scene) return;
-    const motion = matchMedia("(prefers-reduced-motion: reduce)");
-    let raf = 0, visible = true, last = -1;
+    const scene = ref.current;
+    if (!scene) return;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    let visible = true;
+    let lastIndex = -1;
+
     const render = () => {
-      raf = 0; if (!visible && !motion.matches) return;
-      const rect = scene.getBoundingClientRect();
-      const progress = motion.matches ? 1 : clamp(-rect.top / Math.max(rect.height - innerHeight, 1));
-      scene.style.setProperty("--reality-progress", progress.toFixed(4));
-      PHASES.forEach((phase, index) => scene.style.setProperty(`--phase-${phase.replace(/[A-Z]/g, x => `-${x.toLowerCase()}`)}`, clamp((progress - CUTS[index]) / (CUTS[index + 1] - CUTS[index])).toFixed(4)));
-      const raw = CUTS.findIndex((cut, index) => index < CUTS.length - 1 && progress >= cut && progress < CUTS[index + 1]);
-      let next = motion.matches ? 5 : Math.max(0, raw);
-      if (last >= 0 && next !== last) {
-        const boundary = next > last ? CUTS[next] : CUTS[last];
-        if (Math.abs(progress - boundary) < .008) next = last;
+      frame = 0;
+      if ((!visible || document.hidden) && !reduced.matches) return;
+      const bounds = scene.getBoundingClientRect();
+      const progress = reduced.matches ? 0.92 : clamp(-bounds.top / Math.max(bounds.height - innerHeight, 1));
+      scene.style.setProperty("--living-progress", progress.toFixed(4));
+      Object.entries(RANGES).forEach(([name, [start, end]]) => {
+        scene.style.setProperty(`--living-${name}`, clamp((progress - start) / (end - start)).toFixed(4));
+      });
+
+      let nextIndex = STATE_STARTS.findLastIndex((start) => progress >= start);
+      nextIndex = Math.max(0, nextIndex);
+      if (lastIndex >= 0 && nextIndex !== lastIndex) {
+        const boundary = nextIndex > lastIndex ? STATE_STARTS[nextIndex] : STATE_STARTS[lastIndex];
+        if (Math.abs(progress - boundary) < 0.009) nextIndex = lastIndex;
       }
-      if (next !== last) { last = next; onPhase(next); }
-      scene.dataset.motion = motion.matches ? "reduced" : "full";
+      if (nextIndex !== lastIndex) {
+        lastIndex = nextIndex;
+        onState(STATES[nextIndex]);
+      }
+      scene.dataset.motion = reduced.matches ? "reduced" : "full";
     };
-    const schedule = () => { if (!raf) raf = requestAnimationFrame(render); };
-    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; scene.dataset.sceneActive = String(visible); if (visible) schedule(); }, { rootMargin: "15% 0px" });
-    const onVisibility = () => { const bounds = scene.getBoundingClientRect(); visible = !document.hidden && bounds.bottom > 0 && bounds.top < innerHeight; scene.dataset.sceneActive = String(visible); if (visible) schedule(); };
-    observer.observe(scene); addEventListener("scroll", schedule, { passive: true }); addEventListener("resize", schedule, { passive: true }); document.addEventListener("visibilitychange", onVisibility); motion.addEventListener("change", schedule); schedule();
-    return () => { observer.disconnect(); removeEventListener("scroll", schedule); removeEventListener("resize", schedule); document.removeEventListener("visibilitychange", onVisibility); motion.removeEventListener("change", schedule); if (raf) cancelAnimationFrame(raf); };
-  }, [ref, onPhase]);
+
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(render); };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      scene.dataset.sceneActive = String(visible);
+      if (visible) schedule();
+    }, { rootMargin: "15% 0px" });
+    const visibility = () => { visible = !document.hidden && scene.getBoundingClientRect().bottom > 0 && scene.getBoundingClientRect().top < innerHeight; if (visible) schedule(); };
+    observer.observe(scene);
+    addEventListener("scroll", schedule, { passive: true });
+    addEventListener("resize", schedule, { passive: true });
+    document.addEventListener("visibilitychange", visibility);
+    reduced.addEventListener("change", schedule);
+    schedule();
+    return () => {
+      observer.disconnect();
+      removeEventListener("scroll", schedule);
+      removeEventListener("resize", schedule);
+      document.removeEventListener("visibilitychange", visibility);
+      reduced.removeEventListener("change", schedule);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [ref, onState]);
 }
 
-function BusinessCore({ phase }: { phase: RealityPhase }) {
-  return <g className={`business-core business-core--${phase}`} transform="translate(195 210)" aria-hidden="true">
-    <circle className="business-core__halo" r="54"/><circle className="business-core__ring" r="47"/>
-    <image className="business-core__image" href="/bc-icon.png" x="-43" y="-43" width="86" height="86" preserveAspectRatio="xMidYMid meet"/>
-    <g className="business-core__ports"><circle cx="0" cy="-47" r="3"/><circle cx="47" cy="0" r="3"/><circle cy="47" r="3"/><circle cx="-47" r="3"/></g>
-    <text y="68" textAnchor="middle">BUSINESS CORE</text>
-  </g>;
-}
-
-function Network({ phase, selected, onSelect }: { phase: RealityPhase; selected: string | null; onSelect: (id: string) => void }) {
-  return <div className="reality-network">
-    <svg viewBox="0 0 390 430" role="img" aria-label="A growing business network moving from healthy connection through complexity toward alignment.">
-      <defs><linearGradient id="realityPath" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#7398ad" stopOpacity=".24"/><stop offset=".5" stopColor="#d5aa58" stopOpacity=".78"/><stop offset="1" stopColor="#607f91" stopOpacity=".14"/></linearGradient><filter id="coreGlow" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-      <g className="network-paths">{paths.map((d, i) => <path d={d} className={i < 4 ? "base" : i < 13 ? "growth" : "complex"} key={d}/>)}</g>
-      <g className="network-signals">{paths.slice(0, 13).map((d, i) => <circle r="2.2" className={i > 3 ? "growth" : "base"} key={d}><animateMotion dur={`${4.5 + i % 3}s`} repeatCount="indefinite" path={d}/></circle>)}</g>
-      <BusinessCore phase={phase}/>
-      <g className="analysis-field"><circle cx="195" cy="210" r="83"/><path d="M195 18V402M18 210H372"/></g>
-      <g className="alignment-channels"><path d="M195 210V12M195 210H378M195 210V418M195 210H12"/></g>
+function LivingBusinessSystem({ state }: { state: LivingBusinessState }) {
+  return <div className="living-system" aria-hidden="true">
+    <div className="living-core" data-state={state}>
+      <i className="living-core__halo"/><i className="living-core__orbit living-core__orbit--outer"/><i className="living-core__orbit living-core__orbit--inner"/>
+      <span className="living-core__image"><Image src="/bc-icon.png" alt="" width={2000} height={2000} sizes="(max-width: 430px) 30vw, 220px" priority={false}/></span>
+      <i className="living-core__port port-n"/><i className="living-core__port port-e"/><i className="living-core__port port-s"/><i className="living-core__port port-w"/>
+      <b>BUSINESS CORE</b>
+    </div>
+    <svg className="living-network" viewBox="0 0 390 440">
+      <defs>
+        <linearGradient id="livingRoute" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#6d98b2" stopOpacity=".2"/><stop offset=".5" stopColor="#d6aa57" stopOpacity=".85"/><stop offset="1" stopColor="#7392a5" stopOpacity=".18"/></linearGradient>
+        <filter id="livingGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <g className="living-routes">{ROUTES.map(([kind, path], index) => <path className={kind} d={path} key={`${kind}-${index}`}/>)}</g>
+      <g className="living-signals">{ROUTES.slice(0, 15).map(([kind, path], index) => <circle className={`${kind} signal-${index}`} r="2.1" key={`${path}-signal`}><animateMotion path={path} dur={`${4.2 + index % 4 * 0.55}s`} repeatCount="indefinite"/></circle>)}</g>
+      <g className="living-analysis"><circle cx="195" cy="210" r="92"/><path d="M50 98C127 168 262 303 364 317"/><path d="M31 250C126 237 272 263 363 266"/></g>
+      <g className="living-exit-axis"><path d="M195 430V210V4"/><circle cx="195" cy="18" r="4"/></g>
     </svg>
-    <div className="network-nodes">{nodes.map(([id,label,x,y,kind]) => <button key={id} type="button" className={`${kind} ${selected === id ? "selected" : ""}`} style={{left:`${x / 3.9}%`,top:`${y / 4.3}%`}} aria-pressed={selected === id} aria-label={`${label} operational node`} onClick={() => onSelect(id)}><i aria-hidden="true"/><span>{label}</span></button>)}</div>
-    <div className="hidden-costs" aria-hidden="true">{["Attention","Time","Visibility","Consistency","Opportunity"].map(word => <span key={word}>{word}</span>)}</div>
+    <div className="living-nodes">{NODES.map(({ id, label, x, y, layer }) => <span className={`living-node living-node--${layer}`} style={{ left: `${x / 3.9}%`, top: `${y / 4.4}%` }} key={id}><i/>{label}</span>)}</div>
+    <div className="living-costs"><span>TIME</span><span>FOCUS</span><span>VISIBILITY</span><span>CONSISTENCY</span><span>OPPORTUNITY</span></div>
   </div>;
 }
 
 export function OperationalComplexity() {
-  const ref = useRef<HTMLElement>(null); const [phase, setPhase] = useState(0); const [selected, setSelected] = useState<string | null>(null);
-  const changePhase = useCallback((value: number) => { setPhase(value); if (value > 3) setSelected(null); }, []); useSceneProgress(ref, changePhase);
-  return <section className={`reality-scene phase-${PHASES[phase]}`} id="collective" ref={ref} aria-labelledby="reality-title">
-    <div className="reality-scene__sticky-stage"><div className="reality-environment" aria-hidden="true"><i/><i/><i/><i/></div><div className="reality-atmosphere" aria-hidden="true"/><div className="continuity-axis" aria-hidden="true"/>
-      <div className="reality-layout"><div className="reality-copy"><p className="reality-copy__eyebrow">THE REALITY OF GROWTH</p><h2 id="reality-title">Success creates <em>complexity.</em></h2><p>As a business grows, more customers, people, tools, and decisions enter the picture. Growth is not the problem. The challenge begins when those moving parts stop working as one system.</p><div className="reality-state" key={phase}><strong>{stateCopy[phase][0]}</strong><span>{stateCopy[phase][1]}</span></div><div className="phase-meter" aria-hidden="true">{PHASES.map((name,i)=><i className={i <= phase ? "reached" : ""} key={name}/>)}</div></div>
-      <Network phase={PHASES[phase]} selected={selected} onSelect={id => setSelected(current => current === id ? null : id)}/></div>
-      <div className="reality-exit" aria-hidden="true"><i/><i/><i/><i/><span/></div>
+  const ref = useRef<HTMLElement>(null);
+  const [state, setState] = useState<LivingBusinessState>("arrival");
+  const updateState = useCallback((next: LivingBusinessState) => setState(next), []);
+  useLivingBusinessProgress(ref, updateState);
+  const [eyebrow, headline, support] = COPY[state];
+
+  return <section className={`reality-scene living-business living-business--${state}`} id="collective" ref={ref} aria-labelledby="living-title">
+    <div className="living-stage">
+      <div className="living-environment" aria-hidden="true"><i/><i/><i/><i/><span/><span/></div>
+      <div className="living-transition" aria-hidden="true"><i/><i/><i/><i/><span/></div>
+      <div className="living-layout">
+        <header className="living-copy" key={state}>
+          <p>{eyebrow}</p><h2 id="living-title">{headline}</h2><span>{support}</span>
+          <div className="living-progress" aria-hidden="true">{STATES.map((item) => <i className={STATES.indexOf(item) <= STATES.indexOf(state) ? "reached" : ""} key={item}/>)}</div>
+        </header>
+        <LivingBusinessSystem state={state}/>
+      </div>
+      <div className="living-handoff" aria-hidden="true"><i/><span/></div>
     </div>
-    <div className="sr-only"><h3>Scene summary</h3>{stateCopy.slice(1).map((item)=><p key={item[0]}><strong>{item[0]}:</strong> {item[1]}</p>)}</div>
+    <div className="sr-only"><h3>The Living Business</h3>{STATES.map((item) => <p key={item}><strong>{COPY[item][1]}</strong> {COPY[item][2]}</p>)}</div>
   </section>;
 }

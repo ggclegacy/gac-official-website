@@ -322,3 +322,64 @@ Scene Two implementation is feature complete and production-build clean. Visual 
 
 - Automated/source review confirms the intended emotional sequence, asset roles, state synchronization, mobile rules, accessibility structure, and performance architecture.
 - Rendered art-direction, touch, viewport, text-zoom, and motion certification remains external: browser discovery returned zero backends, and the persistent runtime troubleshooting reference pointed to a retired plugin version.
+
+---
+
+# Scene One → Scene Two Signature Transition — Prompts 1–14
+
+## Protected boundary and original problem
+
+- Scene One ownership/progress: `components/hero/Hero.tsx`; Scene Two reformation: `components/OperationalComplexity.tsx`; shared choreography: final transition cascade in `app/globals.css`.
+- Preserved: brand-first landing, Framework Completion, both sticky engines, immutable `bc-icon.png`, Reality Gap state model, later scenes, native user-controlled scrolling, accessibility structure, and reduced motion.
+- Original boundary relied on scale/blur/portal opacity and lacked a causal event, perceptible singularity, directional release, and ordered Scene Two construction.
+
+## Sequential completion
+
+- [x] Prompt 1 — Mapped completion, exit state, portal layers, Scene Two arrival, image scales, scroll ownership, reduced motion, and performance architecture.
+- [x] Prompt 2 — Added one authoritative typed six-phase progress map: Completion `.74–.82`, Overload `.80–.87`, Collapse `.85–.925`, Singularity `.915–.955`, Release `.945–.985`, Reformation `.975–1`.
+- [x] Prompt 3 — Preserved the completed-framework payoff and controlled inward acknowledgment before transition authority begins.
+- [x] Prompt 4 — Added focused blue energy, stronger gold response, inward signal emphasis, and selective environmental narrowing without flashing.
+- [x] Prompt 5 — Chamber modules, pathways, rings, calibration, architecture, grid, and depth now converge at layered rates; raster assets disappear before awkward scale.
+- [x] Prompt 6 — Added one lightweight crisp blue/gold nucleus with a scroll-mapped singularity range equivalent to a perceptible normal-motion hold.
+- [x] Prompt 7 — Added four directional gold routes and two structural blue arcs released from the nucleus; no explosion, random particles, white flash, or generic portal.
+- [x] Prompt 8 — Scene Two now reforms in order: Business Core, primary routes, primary nodes, then copy; existing final elements are reused.
+- [x] Prompt 9 — Obsidian, graphite, blue depth, gold pathways, grid compression, architecture, and central axis transform continuously across the boundary.
+- [x] Prompt 10 — Camera travel is limited to 12% chamber scale plus small vertical compression; masks/opacity/geometry carry the event rather than oversized raster zoom.
+- [x] Prompt 11 — All phases are scroll-derived with stable ownership and deterministic reversal; no timers, snapping, trapping, or frame-rate dependency.
+- [x] Prompt 12 — Added narrow-phone nucleus/release positioning, bounded geometry, reduced environmental detail at 320px, and no horizontal page overflow.
+- [x] Prompt 13 — Reused existing layers and one progress source; no new listener, dependency, temporary duplicate scene tree, full-screen filter, or particle system.
+- [x] Prompt 14 — Reduced motion removes camera/collapse/release travel while retaining stable completion, Business Core, first routes, readable copy, and normal focus order.
+
+## Validation boundary
+
+- Automated validation and source-level reverse/state review complete. `bc-icon.png` remains immutable and correctly sized.
+- Rendered film-sequence review remains external: browser discovery returned zero backends, and the persistent browser runtime’s troubleshooting reference targeted a retired plugin version.
+# Scene Three — The Living Business Complete Rebuild (Prompts 1–19)
+
+## Rebuild baseline and protected boundaries
+
+- Prompt 1 — Audit: inspected `components/OperationalComplexity.tsx`, `components/TransformationScene.tsx`, `components/hero/Hero.tsx`, `app/page.tsx`, shared CSS, both Business Core assets, scroll listeners, responsive rules, and reduced-motion behavior. Preserved Scenes One and Two, native sticky scrolling, Intersection Observer pausing, immutable `bc-icon.png`, and the following transformation scene. Removed the weak flat-network structure and microstate copy model. Baseline lint, TypeScript, and production build passed. Rendered inspection was attempted, but this environment exposed zero browser backends; this remains the sole QA limitation.
+- Prompt 2 — Scene Two handoff: reused the converging four-energy motif, moderate nucleus scale, and first business routes inside the final Scene Three layer. GAC architecture resolves before the Living Business copy; no duplicate fullscreen transition or raster zoom was introduced.
+- Prompt 3 — Six-beat track: rebuilt one 650svh desktop / 580svh mobile sticky track with one normalized progress source and typed arrival, healthy, growth, complexity, recognition, and alignment states. Transition, beat, and exit CSS values are continuous; copy uses a 0.9% hysteresis band.
+- Prompt 4 — Business Core: retained the untouched 2000×2000 RGBA asset and elevated it with bounded halo, dual engineering rings, four ports, responsive `next/image` sizing, focus/strain/stability state behavior, and reduced-motion suppression of continuous loops.
+- Prompt 5 — Environment: built obsidian, graphite, luxury-blue, and dimensional-gold background, middle, and foreground planes with structural walls, floor perspective, haze, restrained reflections, and state-responsive depth.
+- Prompt 6 — Arrival: implemented nucleus-to-core formation, first architecture, four primary functions, and visual-first/copy-last timing. The arrival remains quiet and spatially clear.
+- Prompt 7 — Healthy: Customers, Team, Operations, and Growth use short direct routes, calm reusable signals, and a stable core cadence. The healthy state has a substantial hold before expansion.
+- Prompt 8 — Growth: progressively reveals market/customer, delivery/operations, and control/decision groups with deeper space, upward expansion, more routes, and increased core activity while retaining a positive blue/gold mood.
+- Prompt 9 — Complexity: reuses the existing topology to lengthen, cross, duplicate, isolate, queue, and prioritize routes. Pressure comes from timing and imbalance rather than alarm colors or random density.
+- Prompt 10 — Hidden Cost: Time, Focus, Visibility, Consistency, and Opportunity are expressed through route and signal behavior plus one restrained environmental annotation layer; no cards, counters, or micro-stops were added.
+- Prompt 11 — Recognition: bottlenecks and duplicated routes receive analytical blue tracing, the core refocuses, hierarchy clarifies, and the first rerouting appears without dashboard or HUD treatment.
+- Prompt 12 — Early Alignment: duplicate routes recede, a shared gold backbone establishes, core motion stabilizes, and the same vertical route carries into the existing next scene without claiming complete transformation.
+- Prompt 13 — Copy: consolidated text into one semantic header with one message unit per major beat. Copy is concise, visually secondary, stable in height, and repeated as an accessible complete narrative after the graphic scene.
+- Prompt 14 — Lighting/depth: mapped the Business Core as key light, added bounded haze/reflection layers and weighted architectural response, and reduced mobile layer count without removing depth.
+- Prompt 15 — Scroll pacing: final state starts are 6%, 20%, 37%, 57%, 75%, and 89%; exit begins at 95%. Native scroll remains user controlled, fast progress resolves to valid compositions, and reverse progress reconstructs deterministically.
+- Prompt 16 — Responsive: authored mobile-first compositions for 390/375/430/320px, tablet, desktop, and ultrawide behavior. Mobile places the network above a separate readable copy surface, preserves core dominance, reduces atmospheric layers, and uses safe-area/dynamic viewport units.
+- Prompt 17 — Performance: one passive scroll listener is RAF-batched; continuous values remain CSS variables; only discrete semantic copy enters React state; Intersection Observer/document visibility pause work; SVG filters are bounded; primitives are reused; no dependency was added.
+- Prompt 18 — Accessibility: essential copy and six-beat summary remain semantic HTML, network graphics are hidden from assistive technology, meaning is not hover-dependent, and reduced motion resolves to a stable aligned composition with all narrative copy available.
+- Prompt 19 — Final QA/cleanup: old interactive diagram controls, obsolete state copy, flat Business Core SVG wrapper, and previous network markup were removed. Source-level responsive, overflow, asset, semantics, state, reverse-scroll, and reduced-motion reviews completed. Automated lint, TypeScript, production build, and `git diff --check` are required at the final completion gate below.
+
+## Final completion gate
+
+- Files rebuilt: `components/OperationalComplexity.tsx`, `app/globals.css`, `BUILD_STATUS.md`.
+- Protected: `components/hero/Hero.tsx`, approved Scenes One and Two, `components/TransformationScene.tsx`, page order, source raster assets, and native scroll behavior.
+- Known limitation: rendered screenshot QA could not run because no in-app or extension browser backend was available in this Codex session. No rendered result is being claimed.
