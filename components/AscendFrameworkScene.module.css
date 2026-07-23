@@ -1,0 +1,1390 @@
+.ascendFrameworkScene {
+  --af-progress: 0;
+  --af-entry: 0;
+  --af-phase-local: 0;
+  --af-complete: 0;
+  --af-exit: 0;
+  position: relative;
+  min-height: 590svh;
+  isolation: isolate;
+  color: #f1ecdf;
+  background: #030608;
+}
+
+.ascendFrameworkStage {
+  --active-gold: #e1b560;
+  --active-blue: #3e9dcc;
+  --phase-x: 50%;
+  --phase-y: 44%;
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  min-height: 100svh;
+  overflow: clip;
+  padding:
+    max(12px, env(safe-area-inset-top))
+    max(10px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom))
+    max(10px, env(safe-area-inset-left));
+  background:
+    radial-gradient(
+      ellipse 62% 48% at var(--phase-x) var(--phase-y),
+      rgba(15, 83, 124, .32),
+      transparent 72%
+    ),
+    linear-gradient(154deg, #071016, #040709 63%, #020405);
+  box-shadow: inset 0 0 110px rgba(0, 0, 0, .74);
+  transition: background .65s ease;
+}
+
+.ascendFrameworkStage[data-phase="command"] {
+  --phase-x: 50%;
+  --phase-y: 36%;
+}
+
+.ascendFrameworkStage[data-phase="create"] {
+  --phase-x: 61%;
+  --phase-y: 44%;
+}
+
+.ascendFrameworkStage[data-phase="operate"] {
+  --phase-x: 50%;
+  --phase-y: 53%;
+}
+
+.ascendFrameworkStage[data-phase="expand"] {
+  --phase-x: 38%;
+  --phase-y: 43%;
+}
+
+.ascendFrameworkStage[data-phase="complete"],
+.ascendFrameworkStage[data-phase="exit"] {
+  --phase-x: 50%;
+  --phase-y: 45%;
+  background:
+    radial-gradient(
+      ellipse 72% 56% at 50% 45%,
+      rgba(18, 96, 140, .38),
+      rgba(136, 95, 30, .08) 54%,
+      transparent 74%
+    ),
+    linear-gradient(154deg, #081218, #040709 63%, #020405);
+}
+
+.ascendFrameworkEnvironment,
+.ascendFrameworkEnvironment > span {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ascendFrameworkEnvironment {
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ascendFrameworkDepth {
+  background:
+    radial-gradient(ellipse 48% 38% at 50% 43%, rgba(29, 112, 157, .15), transparent 70%),
+    linear-gradient(90deg, transparent 49.85%, rgba(217, 173, 86, .07) 50%, transparent 50.15%);
+  transform: scale(calc(.97 + var(--af-entry) * .03));
+  opacity: calc(.46 + var(--af-entry) * .54);
+  transition: transform .6s ease, opacity .6s ease;
+}
+
+.ascendFrameworkGrid {
+  inset: 24% -18% -23%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 9.9%,
+      rgba(135, 160, 170, .045) 10%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 12.4%,
+      rgba(135, 160, 170, .04) 12.5%
+    );
+  mask-image: linear-gradient(transparent, #000 42%, transparent 94%);
+  opacity: .5;
+  transform: perspective(620px) rotateX(62deg);
+  transform-origin: bottom;
+  transition: opacity .55s ease, filter .55s ease;
+}
+
+.ascendFrameworkArchitecture {
+  inset: 7% 4% 5%;
+  border: 1px solid rgba(128, 157, 169, .085);
+  clip-path: polygon(
+    12% 0,
+    88% 0,
+    100% 20%,
+    100% 80%,
+    88% 100%,
+    12% 100%,
+    0 80%,
+    0 20%
+  );
+  background:
+    linear-gradient(90deg, transparent 49.85%, rgba(220, 177, 91, .08) 50%, transparent 50.15%),
+    linear-gradient(115deg, transparent 20%, rgba(101, 146, 168, .045) 20.2%, transparent 20.5%),
+    linear-gradient(245deg, transparent 20%, rgba(101, 146, 168, .045) 20.2%, transparent 20.5%);
+  opacity: .58;
+  transform: scale(calc(.96 + var(--af-entry) * .04));
+  transition: clip-path .7s cubic-bezier(.16, 1, .3, 1), opacity .55s ease, transform .55s ease;
+}
+
+.ascendFrameworkAxis {
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(
+    transparent 5%,
+    rgba(225, 184, 100, .09) 26%,
+    rgba(225, 184, 100, .25) 46%,
+    rgba(94, 151, 181, .09) 72%,
+    transparent 95%
+  );
+  opacity: .42;
+  box-shadow: 0 0 9px rgba(215, 171, 82, .08);
+  transition: opacity .5s ease, box-shadow .5s ease;
+}
+
+.ascendFrameworkHorizon {
+  top: 46%;
+  bottom: auto;
+  height: 1px;
+  margin-inline: 9%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(98, 150, 176, .1),
+    rgba(220, 177, 89, .13),
+    rgba(98, 150, 176, .1),
+    transparent
+  );
+  opacity: .35;
+  transform: scaleX(.72);
+  transition: opacity .6s ease, transform .7s cubic-bezier(.16, 1, .3, 1);
+}
+
+.ascendFrameworkVignette {
+  background: radial-gradient(
+    ellipse at 50% 46%,
+    transparent 34%,
+    rgba(0, 0, 0, .34) 76%,
+    rgba(0, 0, 0, .8) 118%
+  );
+  box-shadow: inset 0 0 120px rgba(0, 0, 0, .66);
+}
+
+.ascendFrameworkStage[data-phase="command"] .ascendFrameworkAxis {
+  opacity: .9;
+  box-shadow: 0 0 12px rgba(219, 174, 82, .25);
+}
+
+.ascendFrameworkStage[data-phase="command"] .ascendFrameworkArchitecture {
+  clip-path: polygon(
+    18% 0,
+    82% 0,
+    94% 22%,
+    94% 78%,
+    82% 100%,
+    18% 100%,
+    6% 78%,
+    6% 22%
+  );
+  opacity: .72;
+}
+
+.ascendFrameworkStage[data-phase="create"] .ascendFrameworkArchitecture {
+  clip-path: polygon(
+    8% 0,
+    90% 0,
+    100% 15%,
+    100% 85%,
+    90% 100%,
+    8% 100%,
+    0 76%,
+    0 24%
+  );
+  transform: translateX(1.5%);
+}
+
+.ascendFrameworkStage[data-phase="create"] .ascendFrameworkHorizon {
+  opacity: .66;
+  transform: scaleX(.92) translateX(3%);
+}
+
+.ascendFrameworkStage[data-phase="operate"] .ascendFrameworkGrid {
+  opacity: .76;
+  filter: contrast(1.3);
+}
+
+.ascendFrameworkStage[data-phase="operate"] .ascendFrameworkArchitecture {
+  border-color: rgba(164, 175, 166, .15);
+  transform: scale(.985);
+}
+
+.ascendFrameworkStage[data-phase="expand"] .ascendFrameworkArchitecture {
+  inset-inline: 1%;
+  transform: scale(1.04);
+  opacity: .76;
+}
+
+.ascendFrameworkStage[data-phase="expand"] .ascendFrameworkHorizon {
+  opacity: .72;
+  transform: scaleX(1.08) translateY(-9px);
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkArchitecture,
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkArchitecture {
+  clip-path: polygon(
+    14% 0,
+    86% 0,
+    100% 18%,
+    100% 82%,
+    86% 100%,
+    14% 100%,
+    0 82%,
+    0 18%
+  );
+  border-color: rgba(207, 174, 105, .14);
+  opacity: .84;
+  transform: scale(1);
+}
+
+.ascendFrameworkComposition {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 1320px);
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-areas:
+    "orientation"
+    "system"
+    "editorial";
+  grid-template-rows:
+    minmax(54px, 11%)
+    minmax(272px, 49%)
+    minmax(196px, 1fr);
+  align-items: center;
+  opacity: calc(1 - var(--af-exit) * .92);
+  transition: opacity .2s linear;
+}
+
+.ascendFrameworkOrientation {
+  grid-area: orientation;
+  align-self: center;
+  padding-inline: 8px;
+}
+
+.ascendFrameworkOrientation p {
+  margin: 0 0 6px;
+  color: #b89859;
+  font-size: clamp(7px, 2.2vw, 9px);
+  line-height: 1;
+  letter-spacing: .22em;
+}
+
+.ascendFrameworkOrientation p span {
+  color: #5d7f90;
+}
+
+.ascendFrameworkOrientation h2 {
+  margin: 0;
+  color: #dcd6ca;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(16px, 5vw, 21px);
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+
+.ascendFrameworkSystem {
+  grid-area: system;
+  position: relative;
+  width: min(100%, 48dvh, 390px);
+  aspect-ratio: 1;
+  justify-self: center;
+  align-self: center;
+  isolation: isolate;
+  opacity: calc(.24 + var(--af-entry) * .76);
+  transform: scale(calc(1.15 - var(--af-entry) * .15));
+  transform-origin: center;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1), opacity .5s ease;
+}
+
+.ascendFrameworkPathways {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ascendFrameworkPathBase,
+.ascendFrameworkPathActive,
+.ascendFrameworkPathSignal {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.ascendFrameworkPathBase {
+  stroke: rgba(114, 152, 170, .25);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.ascendFrameworkPathActive {
+  stroke: #dfb15b;
+  stroke-width: 1.6;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  opacity: 0;
+  filter: drop-shadow(0 0 4px rgba(225, 179, 88, .48));
+  transition: opacity .35s ease, stroke-dashoffset .65s cubic-bezier(.16, 1, .3, 1);
+}
+
+.ascendFrameworkPathSignal {
+  stroke: #74b3d3;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 4 96;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px rgba(72, 169, 216, .66));
+}
+
+.ascendFrameworkStage[data-phase="command"] [data-path="command"] .ascendFrameworkPathActive,
+.ascendFrameworkStage[data-phase="create"] [data-path="create"] .ascendFrameworkPathActive,
+.ascendFrameworkStage[data-phase="operate"] [data-path="operate"] .ascendFrameworkPathActive,
+.ascendFrameworkStage[data-phase="expand"] [data-path="expand"] .ascendFrameworkPathActive {
+  stroke-dashoffset: calc(18 - var(--af-phase-local) * 18);
+  opacity: 1;
+}
+
+.ascendFrameworkStage[data-phase="command"] [data-path="command"] .ascendFrameworkPathSignal,
+.ascendFrameworkStage[data-phase="create"] [data-path="create"] .ascendFrameworkPathSignal,
+.ascendFrameworkStage[data-phase="operate"] [data-path="operate"] .ascendFrameworkPathSignal,
+.ascendFrameworkStage[data-phase="expand"] [data-path="expand"] .ascendFrameworkPathSignal {
+  opacity: 1;
+  animation: frameworkSignal 2.7s linear infinite;
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkPathActive,
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkPathActive {
+  stroke-dashoffset: 0;
+  opacity: calc(.65 + var(--af-complete) * .35);
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkPathSignal {
+  opacity: .9;
+  animation: frameworkSignal 3.2s linear infinite;
+}
+
+.ascendFrameworkCore {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  width: clamp(148px, 42vw, 184px);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  transform-origin: center;
+}
+
+.ascendFrameworkCoreField {
+  position: absolute;
+  inset: -19%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(223, 175, 78, .22),
+    rgba(20, 111, 164, .18) 42%,
+    transparent 72%
+  );
+  filter: blur(7px);
+  opacity: .8;
+  transform: scale(.96);
+  transition: transform .65s cubic-bezier(.16, 1, .3, 1), opacity .5s ease, background .55s ease;
+}
+
+.ascendFrameworkOuterRing,
+.ascendFrameworkCalibrationRing,
+.ascendFrameworkInnerRing {
+  position: absolute;
+  border-radius: 50%;
+  transition: transform .7s cubic-bezier(.16, 1, .3, 1), border-color .5s ease, opacity .5s ease;
+}
+
+.ascendFrameworkOuterRing {
+  inset: -2%;
+  border: 1px solid rgba(225, 185, 105, .48);
+  box-shadow:
+    0 0 0 7px rgba(63, 111, 137, .05),
+    inset 0 0 28px rgba(20, 91, 132, .15);
+}
+
+.ascendFrameworkOuterRing::before,
+.ascendFrameworkOuterRing::after {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: inherit;
+  border: 1px solid rgba(109, 157, 180, .3);
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.ascendFrameworkOuterRing::after {
+  inset: -7%;
+  border-color: rgba(214, 174, 94, .18);
+  border-top-color: rgba(232, 194, 117, .62);
+  clip-path: polygon(0 0, 46% 0, 46% 12%, 100% 12%, 100% 100%, 58% 100%, 58% 88%, 0 88%);
+}
+
+.ascendFrameworkCalibrationRing {
+  inset: 4%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(227, 190, 116, .28) 0 .6deg,
+    transparent .6deg 11.25deg
+  );
+  mask-image: radial-gradient(circle, transparent 0 46%, #000 47% 49%, transparent 50%);
+  opacity: .72;
+}
+
+.ascendFrameworkInnerRing {
+  inset: 10%;
+  border: 1px dashed rgba(95, 164, 197, .48);
+  box-shadow: inset 0 0 24px rgba(24, 96, 139, .18);
+}
+
+.ascendFrameworkReflection {
+  position: absolute;
+  z-index: 5;
+  top: 18%;
+  bottom: 18%;
+  left: 44%;
+  width: 12%;
+  background: linear-gradient(90deg, transparent, rgba(255, 228, 170, .55), transparent);
+  filter: blur(3px);
+  rotate: 18deg;
+  opacity: 0;
+  transform: translateX(-80%);
+}
+
+.ascendFrameworkEmblem {
+  position: relative;
+  z-index: 4;
+  width: 83%;
+  height: 83%;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 12px 22px rgba(0, 0, 0, .78))
+    drop-shadow(0 0 10px rgba(216, 167, 71, .16));
+  transition: filter .55s ease, transform .55s cubic-bezier(.16, 1, .3, 1);
+}
+
+.ascendFrameworkPort {
+  position: absolute;
+  z-index: 6;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #e3b766;
+  border-radius: 50%;
+  background: #07293d;
+  box-shadow: 0 0 7px rgba(226, 179, 89, .5);
+}
+
+.portNorth {
+  left: 50%;
+  top: -3px;
+  translate: -50% 0;
+}
+
+.portEast {
+  right: -3px;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.portSouth {
+  left: 50%;
+  bottom: -3px;
+  translate: -50% 0;
+}
+
+.portWest {
+  left: -3px;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.ascendFrameworkStage[data-phase="command"] .ascendFrameworkInnerRing {
+  transform: rotate(0deg);
+  border-color: rgba(228, 185, 99, .72);
+}
+
+.ascendFrameworkStage[data-phase="command"] .ascendFrameworkCalibrationRing {
+  transform: rotate(-5deg);
+}
+
+.ascendFrameworkStage[data-phase="command"] .ascendFrameworkCoreField {
+  transform: translateY(-4px) scale(1.03);
+}
+
+.ascendFrameworkStage[data-phase="create"] .ascendFrameworkInnerRing {
+  transform: rotate(12deg) scaleX(1.03);
+}
+
+.ascendFrameworkStage[data-phase="create"] .ascendFrameworkCalibrationRing {
+  transform: rotate(8deg);
+}
+
+.ascendFrameworkStage[data-phase="create"] .ascendFrameworkCoreField {
+  transform: translateX(5px) scaleX(1.1);
+  background: radial-gradient(
+    circle at 58% 50%,
+    rgba(229, 180, 80, .25),
+    rgba(24, 119, 171, .22) 45%,
+    transparent 72%
+  );
+}
+
+.ascendFrameworkStage[data-phase="create"] .ascendFrameworkReflection {
+  opacity: .8;
+  animation: frameworkReflection 2.8s cubic-bezier(.16, 1, .3, 1) infinite;
+}
+
+.ascendFrameworkStage[data-phase="operate"] .ascendFrameworkOuterRing {
+  transform: rotate(-6deg) scale(.985);
+  border-width: 2px;
+}
+
+.ascendFrameworkStage[data-phase="operate"] .ascendFrameworkInnerRing {
+  transform: rotate(-10deg) scale(.97);
+  border-style: solid;
+}
+
+.ascendFrameworkStage[data-phase="operate"] .ascendFrameworkCoreField {
+  transform: translateY(4px) scale(.96);
+  opacity: .72;
+}
+
+.ascendFrameworkStage[data-phase="expand"] .ascendFrameworkOuterRing {
+  transform: rotate(16deg) scale(1.06);
+}
+
+.ascendFrameworkStage[data-phase="expand"] .ascendFrameworkCalibrationRing {
+  transform: rotate(13deg) scale(1.05);
+}
+
+.ascendFrameworkStage[data-phase="expand"] .ascendFrameworkCoreField {
+  transform: translateX(-4px) scale(1.14);
+  opacity: .92;
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkOuterRing,
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkOuterRing {
+  transform: rotate(10deg) scale(1.04);
+  border-color: rgba(237, 198, 118, .72);
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkCalibrationRing,
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkCalibrationRing {
+  transform: rotate(-10deg) scale(1.035);
+  opacity: .92;
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkInnerRing,
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkInnerRing {
+  transform: rotate(6deg);
+  border-color: rgba(101, 181, 218, .7);
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkCoreField,
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkCoreField {
+  transform: scale(1.15);
+  opacity: 1;
+  background: radial-gradient(
+    circle,
+    rgba(231, 185, 91, .3),
+    rgba(26, 130, 186, .24) 45%,
+    transparent 72%
+  );
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkEmblem {
+  filter:
+    drop-shadow(0 13px 24px rgba(0, 0, 0, .78))
+    drop-shadow(0 0 14px rgba(229, 184, 93, .34))
+    brightness(1.06);
+}
+
+.ascendFrameworkNode {
+  position: absolute;
+  z-index: 5;
+  width: clamp(72px, 22vw, 96px);
+  min-height: 48px;
+  padding: 5px 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 0;
+  color: #aaa8a0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  opacity: calc(.54 + var(--af-entry) * .46);
+  transition:
+    color .35s ease,
+    opacity .35s ease,
+    transform .5s cubic-bezier(.16, 1, .3, 1),
+    filter .35s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ascendFrameworkNode::before,
+.ascendFrameworkNode::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.ascendFrameworkNode::before {
+  inset: 2px;
+  border-left: 1px solid rgba(173, 151, 106, .34);
+  border-right: 1px solid rgba(96, 140, 160, .2);
+  clip-path: polygon(0 0, 80% 0, 100% 24%, 100% 100%, 20% 100%, 0 76%);
+  opacity: .64;
+}
+
+.ascendFrameworkNode::after {
+  left: 14%;
+  right: 14%;
+  bottom: 1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(218, 177, 94, .48), transparent);
+}
+
+.ascendFrameworkNode[data-node="command"] {
+  left: 50%;
+  top: 1%;
+  translate: -50% 0;
+}
+
+.ascendFrameworkNode[data-node="create"] {
+  right: 0;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.ascendFrameworkNode[data-node="operate"] {
+  left: 50%;
+  bottom: 1%;
+  translate: -50% 0;
+}
+
+.ascendFrameworkNode[data-node="expand"] {
+  left: 0;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.ascendFrameworkNodeIcon {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(179, 151, 94, .34);
+  background: rgba(5, 16, 22, .68);
+}
+
+.ascendFrameworkNodeIcon svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: #a68b55;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ascendFrameworkNodeText {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  text-align: left;
+}
+
+.ascendFrameworkNodeText small {
+  color: #807a70;
+  font-size: 7px;
+  line-height: 1;
+  letter-spacing: .08em;
+}
+
+.ascendFrameworkNodeText strong {
+  font-size: clamp(10px, 2.7vw, 11px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .08em;
+}
+
+.ascendFrameworkNode[aria-pressed="true"] {
+  color: #f0e4cc;
+  opacity: 1;
+  transform: scale(1.045);
+  filter: drop-shadow(0 0 9px rgba(217, 169, 75, .28));
+}
+
+.ascendFrameworkNode[aria-pressed="true"]::before {
+  border-color: rgba(237, 196, 112, .78);
+  background: linear-gradient(135deg, rgba(29, 58, 72, .38), transparent 65%);
+}
+
+.ascendFrameworkNode[aria-pressed="true"] .ascendFrameworkNodeIcon {
+  border-color: rgba(238, 195, 108, .75);
+  box-shadow: inset 0 0 10px rgba(22, 104, 150, .28);
+}
+
+.ascendFrameworkNode[aria-pressed="true"] .ascendFrameworkNodeIcon svg {
+  stroke: #edc574;
+}
+
+.ascendFrameworkNode:focus-visible {
+  outline: 2px solid #efd28e;
+  outline-offset: 3px;
+}
+
+.ascendFrameworkStage[data-phase="command"] .ascendFrameworkNode:not([data-node="command"]),
+.ascendFrameworkStage[data-phase="create"] .ascendFrameworkNode:not([data-node="create"]),
+.ascendFrameworkStage[data-phase="operate"] .ascendFrameworkNode:not([data-node="operate"]),
+.ascendFrameworkStage[data-phase="expand"] .ascendFrameworkNode:not([data-node="expand"]) {
+  opacity: .58;
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkNode,
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkNode {
+  color: #e7decc;
+  opacity: 1;
+  filter: drop-shadow(0 0 7px rgba(214, 169, 80, .18));
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkNode::before,
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkNode::before {
+  border-color: rgba(222, 184, 107, .58);
+}
+
+.ascendFrameworkEditorial {
+  grid-area: editorial;
+  align-self: stretch;
+  width: min(100%, 560px);
+  min-height: 196px;
+  margin: 0 auto;
+  padding: 13px 8px 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-top: 1px solid rgba(209, 169, 87, .28);
+  opacity: calc(1 - var(--af-exit));
+  transform: translateY(calc(var(--af-exit) * -10px));
+  transition: opacity .25s linear, transform .25s linear;
+}
+
+.ascendFrameworkMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.ascendFrameworkMeta p {
+  margin: 0;
+  color: #c59f58;
+  font-size: 8px;
+  line-height: 1;
+  letter-spacing: .2em;
+}
+
+.ascendFrameworkMeta p:last-child {
+  color: #788d96;
+  letter-spacing: .13em;
+}
+
+.ascendFrameworkEditorial h3 {
+  max-width: 540px;
+  min-height: 2.02em;
+  margin: 10px 0 0;
+  color: #f0eadf;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(26px, 7.4vw, 34px);
+  font-weight: 500;
+  line-height: 1.01;
+  letter-spacing: -.027em;
+  text-wrap: balance;
+  animation-duration: .42s;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+  animation-fill-mode: both;
+}
+
+.ascendFrameworkCopy {
+  max-width: 530px;
+  min-height: 3.9em;
+  margin: 9px 0 0;
+  color: #bbb7ae;
+  font-size: clamp(10px, 2.8vw, 12px);
+  line-height: 1.5;
+  animation-duration: .46s;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+  animation-fill-mode: both;
+}
+
+.ascendFrameworkStage[data-phase="intro"] :is(.ascendFrameworkEditorial h3, .ascendFrameworkCopy) {
+  animation-name: editorialIntro;
+}
+
+.ascendFrameworkStage[data-phase="command"] :is(.ascendFrameworkEditorial h3, .ascendFrameworkCopy) {
+  animation-name: editorialCommand;
+}
+
+.ascendFrameworkStage[data-phase="create"] :is(.ascendFrameworkEditorial h3, .ascendFrameworkCopy) {
+  animation-name: editorialCreate;
+}
+
+.ascendFrameworkStage[data-phase="operate"] :is(.ascendFrameworkEditorial h3, .ascendFrameworkCopy) {
+  animation-name: editorialOperate;
+}
+
+.ascendFrameworkStage[data-phase="expand"] :is(.ascendFrameworkEditorial h3, .ascendFrameworkCopy) {
+  animation-name: editorialExpand;
+}
+
+.ascendFrameworkStage[data-phase="complete"] :is(.ascendFrameworkEditorial h3, .ascendFrameworkCopy),
+.ascendFrameworkStage[data-phase="exit"] :is(.ascendFrameworkEditorial h3, .ascendFrameworkCopy) {
+  animation-name: editorialComplete;
+}
+
+.ascendFrameworkCapabilities {
+  min-height: 12px;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 16px;
+  list-style: none;
+}
+
+.ascendFrameworkCapabilities li {
+  position: relative;
+  color: #ad925e;
+  font-size: 7px;
+  line-height: 1.2;
+  letter-spacing: .15em;
+}
+
+.ascendFrameworkCapabilities li:not(:last-child)::after {
+  content: "/";
+  position: absolute;
+  left: calc(100% + 6px);
+  color: #526d79;
+}
+
+.ascendFrameworkProgress {
+  display: flex;
+  gap: 5px;
+  margin-top: 11px;
+}
+
+.ascendFrameworkProgress i {
+  width: 24px;
+  height: 2px;
+  background: rgba(127, 143, 147, .2);
+  transition: width .5s ease, background .45s ease, box-shadow .45s ease;
+}
+
+.ascendFrameworkProgress i.isReached {
+  background: #cda451;
+  box-shadow: 0 0 6px rgba(205, 164, 81, .26);
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkProgress,
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkProgress {
+  gap: 0;
+}
+
+.ascendFrameworkStage[data-phase="complete"] .ascendFrameworkProgress i,
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkProgress i {
+  width: 28px;
+  background: linear-gradient(90deg, #bd9142, #e0bb6e);
+  box-shadow: 0 0 7px rgba(214, 174, 87, .28);
+}
+
+.ascendFrameworkReceiverAxis {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 52%;
+  transform-origin: top;
+  background: linear-gradient(#e0b462, rgba(72, 148, 187, .35), transparent);
+  opacity: var(--af-exit);
+  transform: scaleY(var(--af-exit));
+  box-shadow: 0 0 8px rgba(216, 173, 87, .28);
+}
+
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkNode[data-node="command"] {
+  transform: translateY(22px) scale(.88);
+}
+
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkNode[data-node="create"] {
+  transform: translateX(-22px) scale(.88);
+}
+
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkNode[data-node="operate"] {
+  transform: translateY(-22px) scale(.88);
+}
+
+.ascendFrameworkStage[data-phase="exit"] .ascendFrameworkNode[data-node="expand"] {
+  transform: translateX(22px) scale(.88);
+}
+
+.ascendFrameworkScene[data-scene-active="false"] *,
+.ascendFrameworkScene[data-document-hidden="true"] * {
+  animation-play-state: paused !important;
+}
+
+@keyframes frameworkSignal {
+  to { stroke-dashoffset: -100; }
+}
+
+@keyframes frameworkReflection {
+  0%, 20% { transform: translateX(-95%); opacity: 0; }
+  45% { opacity: .8; }
+  75%, 100% { transform: translateX(95%); opacity: 0; }
+}
+
+@keyframes editorialIntro {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes editorialCommand {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes editorialCreate {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes editorialOperate {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes editorialExpand {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes editorialComplete {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+@media (max-width: 340px) {
+  .ascendFrameworkStage {
+    padding-inline: max(7px, env(safe-area-inset-left));
+  }
+
+  .ascendFrameworkComposition {
+    grid-template-rows:
+      minmax(50px, 10%)
+      minmax(255px, 48%)
+      minmax(202px, 1fr);
+  }
+
+  .ascendFrameworkSystem {
+    width: min(100%, 46dvh, 306px);
+  }
+
+  .ascendFrameworkCore {
+    width: 148px;
+  }
+
+  .ascendFrameworkNode {
+    width: clamp(70px, 22vw, 76px);
+    min-height: 46px;
+    padding-inline: 4px;
+    gap: 3px;
+  }
+
+  .ascendFrameworkNodeIcon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .ascendFrameworkNodeText strong {
+    font-size: 9.5px;
+    letter-spacing: .05em;
+  }
+
+  .ascendFrameworkEditorial h3 {
+    font-size: clamp(24px, 7.3vw, 27px);
+  }
+
+  .ascendFrameworkCopy {
+    font-size: 9.5px;
+  }
+}
+
+@media (max-height: 700px) and (max-width: 760px) {
+  .ascendFrameworkComposition {
+    grid-template-rows:
+      minmax(48px, 9%)
+      minmax(250px, 46%)
+      minmax(198px, 1fr);
+  }
+
+  .ascendFrameworkSystem {
+    width: min(100%, 44dvh, 310px);
+  }
+
+  .ascendFrameworkCore {
+    width: clamp(136px, 38vw, 158px);
+  }
+
+  .ascendFrameworkArchitecture {
+    opacity: .4;
+  }
+
+  .ascendFrameworkGrid {
+    opacity: .33;
+  }
+
+  .ascendFrameworkOrientation h2 {
+    font-size: 16px;
+  }
+
+  .ascendFrameworkEditorial {
+    padding-top: 9px;
+  }
+
+  .ascendFrameworkEditorial h3 {
+    min-height: 1.95em;
+    margin-top: 7px;
+    font-size: clamp(23px, 6.7vw, 29px);
+  }
+
+  .ascendFrameworkCopy {
+    min-height: 3.65em;
+    margin-top: 6px;
+    font-size: 9.5px;
+    line-height: 1.42;
+  }
+
+  .ascendFrameworkCapabilities {
+    margin-top: 7px;
+  }
+
+  .ascendFrameworkProgress {
+    margin-top: 8px;
+  }
+}
+
+@media (min-width: 761px) {
+  .ascendFrameworkScene {
+    min-height: 560svh;
+  }
+
+  .ascendFrameworkStage {
+    padding:
+      max(22px, env(safe-area-inset-top))
+      clamp(28px, 4vw, 72px)
+      max(22px, env(safe-area-inset-bottom));
+  }
+
+  .ascendFrameworkComposition {
+    grid-template-areas:
+      "orientation system"
+      "editorial system";
+    grid-template-columns: minmax(330px, 38%) minmax(520px, 62%);
+    grid-template-rows: minmax(90px, 27%) minmax(340px, 73%);
+    gap: 0 clamp(42px, 6vw, 100px);
+  }
+
+  .ascendFrameworkOrientation {
+    align-self: end;
+    padding: 0 0 22px;
+  }
+
+  .ascendFrameworkOrientation p {
+    font-size: 9px;
+  }
+
+  .ascendFrameworkOrientation h2 {
+    font-size: clamp(22px, 2vw, 30px);
+  }
+
+  .ascendFrameworkSystem {
+    width: min(100%, 76dvh, 760px);
+    align-self: center;
+  }
+
+  .ascendFrameworkCore {
+    width: clamp(300px, 30vw, 430px);
+  }
+
+  .ascendFrameworkNode {
+    width: clamp(104px, 10vw, 132px);
+    min-height: 58px;
+    gap: 8px;
+  }
+
+  .ascendFrameworkNodeIcon {
+    width: 29px;
+    height: 29px;
+  }
+
+  .ascendFrameworkNodeIcon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ascendFrameworkNodeText small {
+    font-size: 8px;
+  }
+
+  .ascendFrameworkNodeText strong {
+    font-size: 11px;
+  }
+
+  .ascendFrameworkEditorial {
+    align-self: start;
+    min-height: 370px;
+    padding: 26px 0 0;
+  }
+
+  .ascendFrameworkMeta p {
+    font-size: 9px;
+  }
+
+  .ascendFrameworkEditorial h3 {
+    min-height: 2.05em;
+    margin-top: 17px;
+    font-size: clamp(42px, 4vw, 64px);
+    line-height: .99;
+  }
+
+  .ascendFrameworkCopy {
+    min-height: 4.5em;
+    margin-top: 19px;
+    font-size: clamp(12px, 1.15vw, 15px);
+    line-height: 1.6;
+  }
+
+  .ascendFrameworkCapabilities {
+    margin-top: 18px;
+    gap: 8px 21px;
+  }
+
+  .ascendFrameworkCapabilities li {
+    font-size: 8px;
+  }
+
+  .ascendFrameworkProgress {
+    margin-top: 20px;
+  }
+
+  .ascendFrameworkProgress i {
+    width: 34px;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1050px) {
+  .ascendFrameworkComposition {
+    grid-template-columns: minmax(300px, 36%) minmax(440px, 64%);
+    gap: 0 clamp(24px, 4vw, 58px);
+  }
+
+  .ascendFrameworkSystem {
+    width: min(100%, 68dvh, 620px);
+  }
+
+  .ascendFrameworkCore {
+    width: clamp(250px, 28vw, 340px);
+  }
+
+  .ascendFrameworkEditorial h3 {
+    font-size: clamp(36px, 4.2vw, 50px);
+  }
+}
+
+@media (min-width: 761px) and (max-height: 760px) {
+  .ascendFrameworkComposition {
+    grid-template-rows: minmax(78px, 24%) minmax(320px, 76%);
+  }
+
+  .ascendFrameworkSystem {
+    width: min(100%, 68dvh, 570px);
+  }
+
+  .ascendFrameworkCore {
+    width: clamp(245px, 35dvh, 330px);
+  }
+
+  .ascendFrameworkEditorial {
+    min-height: 300px;
+    padding-top: 18px;
+  }
+
+  .ascendFrameworkEditorial h3 {
+    font-size: clamp(35px, 4vw, 52px);
+  }
+
+  .ascendFrameworkCopy {
+    margin-top: 12px;
+    line-height: 1.48;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 520px) and (max-width: 950px) {
+  .ascendFrameworkStage {
+    padding:
+      max(8px, env(safe-area-inset-top))
+      max(12px, env(safe-area-inset-right))
+      max(8px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
+  }
+
+  .ascendFrameworkComposition {
+    grid-template-areas: "orientation system editorial";
+    grid-template-columns: minmax(150px, 24%) minmax(290px, 39%) minmax(245px, 37%);
+    grid-template-rows: 1fr;
+    gap: 0 12px;
+  }
+
+  .ascendFrameworkOrientation {
+    align-self: center;
+    padding: 0;
+  }
+
+  .ascendFrameworkOrientation h2 {
+    max-width: 170px;
+    font-size: clamp(18px, 2.6vw, 24px);
+  }
+
+  .ascendFrameworkSystem {
+    width: min(100%, 84dvh, 350px);
+  }
+
+  .ascendFrameworkCore {
+    width: clamp(132px, 21vw, 172px);
+  }
+
+  .ascendFrameworkNode {
+    width: clamp(72px, 10vw, 88px);
+    min-height: 44px;
+    padding-inline: 4px;
+    gap: 4px;
+  }
+
+  .ascendFrameworkNodeIcon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .ascendFrameworkNodeText strong {
+    font-size: 9.5px;
+  }
+
+  .ascendFrameworkEditorial {
+    align-self: center;
+    min-height: 0;
+    padding: 12px 0 0;
+  }
+
+  .ascendFrameworkEditorial h3 {
+    min-height: 0;
+    margin-top: 9px;
+    font-size: clamp(22px, 3vw, 29px);
+    line-height: 1;
+  }
+
+  .ascendFrameworkCopy {
+    min-height: 0;
+    margin-top: 8px;
+    font-size: 9px;
+    line-height: 1.38;
+  }
+
+  .ascendFrameworkCapabilities {
+    margin-top: 8px;
+    gap: 4px 12px;
+  }
+
+  .ascendFrameworkCapabilities li {
+    font-size: 6.5px;
+  }
+
+  .ascendFrameworkProgress {
+    margin-top: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ascendFrameworkScene {
+    min-height: auto;
+  }
+
+  .ascendFrameworkStage {
+    position: relative;
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .ascendFrameworkComposition {
+    min-height: calc(100svh - 24px);
+    opacity: 1;
+  }
+
+  .ascendFrameworkSystem,
+  .ascendFrameworkCoreField,
+  .ascendFrameworkOuterRing,
+  .ascendFrameworkCalibrationRing,
+  .ascendFrameworkInnerRing,
+  .ascendFrameworkEditorial,
+  .ascendFrameworkNode {
+    transform: none !important;
+    opacity: 1;
+  }
+
+  .ascendFrameworkScene *,
+  .ascendFrameworkScene *::before,
+  .ascendFrameworkScene *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
+
+  .ascendFrameworkPathActive {
+    stroke-dashoffset: 0;
+    opacity: .8;
+  }
+
+  .ascendFrameworkPathSignal,
+  .ascendFrameworkReceiverAxis {
+    display: none;
+  }
+
+  .ascendFrameworkNode {
+    color: #dfd6c5;
+  }
+
+  .ascendFrameworkNode[aria-pressed="true"] {
+    outline: 2px solid rgba(239, 198, 113, .72);
+    outline-offset: 2px;
+  }
+}
